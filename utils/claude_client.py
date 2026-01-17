@@ -104,6 +104,22 @@ def edit_draft_with_instruction(draft: str, instruction: str) -> str:
     return generate_response(prompt, system, model_type="opus")
 
 
+def generate_proposal(book_info: dict, author_info: dict) -> str:
+    """출간기획서 생성 [OPUS]"""
+    from prompts.templates import get_proposal_generation_prompt
+    prompt = get_proposal_generation_prompt(book_info, author_info)
+    system = "당신은 대형 출판사 기획 편집자입니다. 답장률 85%의 기획서를 작성합니다."
+    return generate_response(prompt, system, model_type="opus")
+
+
+def generate_landing_page(book_info: dict, webinar_info: dict) -> str:
+    """랜딩페이지 카피 생성 [OPUS]"""
+    from prompts.templates import get_landing_page_prompt
+    prompt = get_landing_page_prompt(book_info, webinar_info)
+    system = "당신은 전환율 30% 이상의 랜딩페이지 전문 카피라이터입니다."
+    return generate_response(prompt, system, model_type="opus")
+
+
 # ============================================================
 # 🟢 HAIKU 사용 (비용 절감) - 초안 생성
 # ============================================================

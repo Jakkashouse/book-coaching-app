@@ -14,6 +14,8 @@ from utils.claude_client import (
     add_storytelling,
     chat_with_coach,
     edit_draft_with_instruction,
+    generate_proposal,
+    generate_landing_page,
 )
 
 # 페이지 설정
@@ -68,6 +70,10 @@ def init_session_state():
         "current_section": None,
         "chat_messages": [],
         "show_chatbot": False,
+        "generated_proposal": "",
+        "generated_landing_page": "",
+        "author_info": {},
+        "webinar_info": {},
     }
     for key, value in defaults.items():
         if key not in st.session_state:
@@ -85,7 +91,9 @@ def render_sidebar():
             ("2️⃣", "제목 생성"),
             ("3️⃣", "목차 생성"),
             ("4️⃣", "초안 생성"),
-            ("5️⃣", "결과물 다운로드"),
+            ("5️⃣", "출간기획서"),
+            ("6️⃣", "랜딩페이지"),
+            ("7️⃣", "결과물 다운로드"),
         ]
 
         for i, (icon, name) in enumerate(steps, 1):
@@ -496,8 +504,259 @@ def render_step4():
 
 
 def render_step5():
-    """5단계: 결과물 다운로드"""
-    st.markdown('<p class="step-header">5단계: 결과물 다운로드</p>', unsafe_allow_html=True)
+    """5단계: 출간기획서"""
+    st.markdown('<p class="step-header">5단계: 출간기획서</p>', unsafe_allow_html=True)
+    st.markdown("출판사에 제출할 기획서를 생성합니다.")
+
+    col1, col2 = st.columns([2, 1])
+
+    with col1:
+        # 저자 정보 입력
+        with st.expander("📝 저자 정보 입력", expanded=not st.session_state.generated_proposal):
+            profession = st.text_input(
+                "직업/전문 분야",
+                value=st.session_state.author_info.get("profession", ""),
+                placeholder="예: 부동산 컨설턴트, 10년차 마케터"
+            )
+            career = st.text_area(
+                "경력/전문성",
+                value=st.session_state.author_info.get("career", ""),
+                placeholder="예: 부동산 투자 15년, 자산 100억 달성, 수강생 500명 배출",
+                height=80
+            )
+            achievements = st.text_area(
+                "대표 성과",
+                value=st.session_state.author_info.get("achievements", ""),
+                placeholder="예: 베스트셀러 저자, TV 출연, 강연 100회",
+                height=80
+            )
+            sns = st.text_input(
+                "SNS/블로그",
+                value=st.session_state.author_info.get("sns", ""),
+                placeholder="예: 인스타 1만, 유튜브 5천, 블로그 월 10만"
+            )
+            contact = st.text_input(
+                "연락처",
+                value=st.session_state.author_info.get("contact", ""),
+                placeholder="예: email@example.com / 010-1234-5678"
+            )
+
+            if st.button("💾 저자 정보 저장"):
+                st.session_state.author_info = {
+                    "name": st.session_state.book_info.get("name", ""),
+                    "profession": profession,
+                    "career": career,
+                    "achievements": achievements,
+                    "sns": sns,
+                    "contact": contact,
+                }
+                st.success("저자 정보가 저장되었습니다.")
+
+        # 기획서 생성
+        if st.button("📄 출간기획서 생성하기", use_container_width=True):
+            if not st.session_state.author_info:
+                st.warning("먼저 저자 정보를 저장해주세요.")
+            else:
+                with st.spinner("기획서를 생성하고 있습니다... (약 1분 소요)"):
+                    result = generate_proposal(
+                        st.session_state.book_info,
+                        st.session_state.author_info
+                    )
+                    if result:
+                        st.session_state.generated_proposal = result
+                        st.rerun()
+
+        # 생성된 기획서 표시
+        if st.session_state.generated_proposal:
+            st.markdown("### 📋 생성된 출간기획서")
+            edited_proposal = st.text_area(
+                "기획서 수정 (직접 편집 가능)",
+                value=st.session_state.generated_proposal,
+                height=500
+            )
+            st.session_state.generated_proposal = edited_proposal
+
+            # 다운로드
+            st.download_button(
+                label="📥 기획서 다운로드 (마크다운)",
+                data=edited_proposal,
+                file_name=f"{st.session_state.selected_title}_출간기획서.md",
+                mime="text/markdown",
+                use_container_width=True
+            )
+
+    with col2:
+        st.markdown("### 💡 기획서 팁")
+        st.info("""
+        **좋은 기획서 조건:**
+        - A4 2페이지 분량
+        - 5분 안에 읽을 수 있게
+        - 구체적인 숫자 포함
+        - 차별점 명확히
+
+        **필수 7요소:**
+        1. 제목 & 부제목
+        2. 기획 의도
+        3. 타겟 독자
+        4. 시장 분석
+        5. 목차 요약
+        6. 저자 소개
+        7. 마케팅 계획
+        """)
+
+        if st.session_state.generated_proposal:
+            if st.button("🔄 기획서 다시 생성"):
+                with st.spinner("기획서를 다시 생성하고 있습니다..."):
+                    result = generate_proposal(
+                        st.session_state.book_info,
+                        st.session_state.author_info
+                    )
+                    if result:
+                        st.session_state.generated_proposal = result
+                        st.rerun()
+
+    # 네비게이션
+    st.markdown("---")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("← 이전 단계"):
+            st.session_state.current_step = 4
+            st.rerun()
+    with col2:
+        if st.button("다음 단계로 →", use_container_width=True):
+            st.session_state.current_step = 6
+            st.rerun()
+
+
+def render_step6():
+    """6단계: 랜딩페이지"""
+    st.markdown('<p class="step-header">6단계: 랜딩페이지</p>', unsafe_allow_html=True)
+    st.markdown("책 홍보용 랜딩페이지 카피를 생성합니다.")
+
+    col1, col2 = st.columns([2, 1])
+
+    with col1:
+        # 웨비나 정보 입력
+        with st.expander("📝 웨비나/이벤트 정보 입력", expanded=not st.session_state.generated_landing_page):
+            webinar_title = st.text_input(
+                "웨비나 제목",
+                value=st.session_state.webinar_info.get("webinar_title", ""),
+                placeholder="예: 2달 만에 책 쓰는 비밀 공개 웨비나"
+            )
+            datetime = st.text_input(
+                "일시",
+                value=st.session_state.webinar_info.get("datetime", ""),
+                placeholder="예: 2025년 2월 15일 (토) 오후 2시"
+            )
+            speaker = st.text_input(
+                "강사",
+                value=st.session_state.webinar_info.get("speaker", st.session_state.book_info.get("name", "")),
+                placeholder="예: 홍길동 (책쓰기 코치)"
+            )
+            content = st.text_area(
+                "주요 내용",
+                value=st.session_state.webinar_info.get("content", ""),
+                placeholder="예: 1) 99%가 실패하는 이유 2) AI로 9배 빨리 쓰는 법 3) 오늘 바로 시작하는 액션플랜",
+                height=80
+            )
+            bonus = st.text_area(
+                "보너스/혜택",
+                value=st.session_state.webinar_info.get("bonus", ""),
+                placeholder="예: 제목 공식 10가지 PDF, AI 프롬프트 7종, 목차 템플릿",
+                height=80
+            )
+
+            if st.button("💾 웨비나 정보 저장"):
+                st.session_state.webinar_info = {
+                    "webinar_title": webinar_title,
+                    "datetime": datetime,
+                    "speaker": speaker,
+                    "content": content,
+                    "bonus": bonus,
+                }
+                st.success("웨비나 정보가 저장되었습니다.")
+
+        # 랜딩페이지 생성
+        if st.button("🎨 랜딩페이지 카피 생성하기", use_container_width=True):
+            if not st.session_state.webinar_info:
+                st.warning("먼저 웨비나 정보를 저장해주세요.")
+            else:
+                with st.spinner("랜딩페이지를 생성하고 있습니다... (약 1분 소요)"):
+                    result = generate_landing_page(
+                        st.session_state.book_info,
+                        st.session_state.webinar_info
+                    )
+                    if result:
+                        st.session_state.generated_landing_page = result
+                        st.rerun()
+
+        # 생성된 랜딩페이지 표시
+        if st.session_state.generated_landing_page:
+            st.markdown("### 🎨 생성된 랜딩페이지 카피")
+            edited_landing = st.text_area(
+                "카피 수정 (직접 편집 가능)",
+                value=st.session_state.generated_landing_page,
+                height=500
+            )
+            st.session_state.generated_landing_page = edited_landing
+
+            # 다운로드
+            st.download_button(
+                label="📥 랜딩페이지 카피 다운로드",
+                data=edited_landing,
+                file_name=f"{st.session_state.selected_title}_랜딩페이지.md",
+                mime="text/markdown",
+                use_container_width=True
+            )
+
+    with col2:
+        st.markdown("### 💡 랜딩페이지 구조")
+        st.info("""
+        **10개 섹션:**
+        1. 헤더 (Hero)
+        2. 문제 제기
+        3. 해결책 제시
+        4. 강사 소개
+        5. 커리큘럼
+        6. 후기/성과
+        7. 보너스/혜택
+        8. 신청 폼
+        9. FAQ
+        10. 최종 CTA
+
+        **전환율 높이는 팁:**
+        - 긴급성/희소성
+        - 구체적 숫자
+        - 사회적 증거
+        """)
+
+        if st.session_state.generated_landing_page:
+            if st.button("🔄 랜딩페이지 다시 생성"):
+                with st.spinner("랜딩페이지를 다시 생성하고 있습니다..."):
+                    result = generate_landing_page(
+                        st.session_state.book_info,
+                        st.session_state.webinar_info
+                    )
+                    if result:
+                        st.session_state.generated_landing_page = result
+                        st.rerun()
+
+    # 네비게이션
+    st.markdown("---")
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("← 이전 단계"):
+            st.session_state.current_step = 5
+            st.rerun()
+    with col2:
+        if st.button("다음 단계로 →", use_container_width=True):
+            st.session_state.current_step = 7
+            st.rerun()
+
+
+def render_step7():
+    """7단계: 결과물 다운로드"""
+    st.markdown('<p class="step-header">7단계: 결과물 다운로드</p>', unsafe_allow_html=True)
     st.markdown("작성한 내용을 마크다운 파일로 다운로드할 수 있습니다.")
 
     # 전체 원고 생성
@@ -615,7 +874,7 @@ def render_step5():
 
     # 이전 단계
     if st.button("← 이전 단계"):
-        st.session_state.current_step = 4
+        st.session_state.current_step = 6
         st.rerun()
 
 
@@ -721,6 +980,8 @@ def main():
                 3: render_step3,
                 4: render_step4,
                 5: render_step5,
+                6: render_step6,
+                7: render_step7,
             }
 
             current_step = st.session_state.current_step
@@ -742,6 +1003,8 @@ def main():
             3: render_step3,
             4: render_step4,
             5: render_step5,
+            6: render_step6,
+            7: render_step7,
         }
 
         current_step = st.session_state.current_step

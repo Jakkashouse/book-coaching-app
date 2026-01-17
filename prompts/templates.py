@@ -251,3 +251,76 @@ WRITING_TONES = [
     "감성적인 (감동을 주는)",
     "실용적인 (바로 적용 가능한)",
 ]
+
+
+def get_proposal_generation_prompt(book_info: dict, author_info: dict) -> str:
+    """출간기획서 생성 프롬프트"""
+    return f"""내 책 정보:
+- 제목: {book_info.get('title', '')}
+- 주제: {book_info.get('topic', '')}
+- 타겟 독자: {book_info.get('target_reader', '')}
+- 핵심 메시지: {book_info.get('core_message', '')}
+
+저자 정보:
+- 이름: {author_info.get('name', '')}
+- 직업/전문 분야: {author_info.get('profession', '')}
+- 경력/전문성: {author_info.get('career', '')}
+- 대표 성과: {author_info.get('achievements', '')}
+- SNS/블로그: {author_info.get('sns', '')}
+- 연락처: {author_info.get('contact', '')}
+
+## 기획서 7가지 구성 요소를 모두 포함해서 작성해주세요:
+
+1. **제목 & 부제목**: 임팩트 있는 제목과 구체적 부제목
+2. **기획 의도**: 이 책이 왜 필요한지, 왜 내가 쓸 수 있는지 (3문장)
+3. **타겟 독자**: 주 타겟, 부 타겟, 예상 시장 규모
+4. **시장 분석**: 유사 도서 3권과의 차별점, USP
+5. **목차 요약**: 5부 구조 간략 소개
+6. **저자 소개**: 신뢰도를 높이는 경력/전문성
+7. **마케팅 계획**: 보유 채널, 출간 전후 홍보 계획
+
+## 요구사항:
+1. A4 2페이지 분량으로 간결하게
+2. 출판사 편집자가 5분 안에 읽을 수 있도록
+3. 구체적인 숫자 포함 (예상 판매량, 타겟 규모 등)
+4. 차별점과 시장성 강조
+
+출판사 편집자가 "이 책 출판하고 싶다"고 느낄 수 있도록 작성해주세요."""
+
+
+def get_landing_page_prompt(book_info: dict, webinar_info: dict) -> str:
+    """랜딩페이지 카피 생성 프롬프트"""
+    return f"""책/웨비나 정보:
+- 책 제목: {book_info.get('title', '')}
+- 주제: {book_info.get('topic', '')}
+- 타겟 독자: {book_info.get('target_reader', '')}
+- 핵심 메시지: {book_info.get('core_message', '')}
+
+웨비나/이벤트 정보:
+- 웨비나 제목: {webinar_info.get('webinar_title', '')}
+- 일시: {webinar_info.get('datetime', '')}
+- 강사: {webinar_info.get('speaker', '')}
+- 주요 내용: {webinar_info.get('content', '')}
+- 보너스/혜택: {webinar_info.get('bonus', '')}
+
+## 랜딩페이지 10개 섹션 카피를 작성해주세요:
+
+1. **헤더 (Hero)**: 3초 안에 시선 강탈 (A/B/C 3가지 버전)
+2. **문제 제기**: "나도 이런 고민..." 공감 형성
+3. **해결책 제시**: 웨비나에서 알려줄 3가지
+4. **강사 소개**: 신뢰 구축
+5. **커리큘럼**: 90분 타임테이블
+6. **사회적 증거**: 후기/성과 데이터
+7. **보너스/혜택**: 참석자 선물
+8. **CTA (신청 폼)**: 신청 유도
+9. **FAQ**: 자주 묻는 질문 5개
+10. **최종 CTA**: 마지막 푸시
+
+## 요구사항:
+1. 전환율 30% 이상 목표
+2. 긴급성/희소성 요소 포함
+3. CTA 버튼 문구 5가지 버전
+4. 타겟의 언어로 (전문 용어 최소화)
+5. 마크다운 형식으로 깔끔하게
+
+신청하고 싶어지는 카피를 작성해주세요."""
