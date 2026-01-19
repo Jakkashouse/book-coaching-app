@@ -1,3 +1,26 @@
+# 책쓰기 코칭 앱 의존성
+# =====================
+
+# 핵심 프레임워크
 streamlit>=1.28.0
+
+# AI API
 anthropic>=0.18.0
-python-dotenv>=1.0.0
+openai>=1.0.0  # 음성 모드 (Whisper API)
+
+# 유튜브 처리
+youtube-transcript-api>=0.6.0
+yt-dlp>=2024.1.0  # 유튜브 메타데이터 추출
+
+# 음성 처리
+pydub>=0.25.1  # 오디오 파일 처리
+
+# 문서 생성 (다운로드 기능)
+python-docx>=0.8.11  # Word 문서 (.docx) 생성
+reportlab>=4.0.0  # PDF 문서 생성
+
+# 유틸리티
+python-dotenv>=1.0.0  # 환경 변수 관리
+
+# 테스트 (개발용)
+# pytest>=7.0.0

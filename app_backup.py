@@ -117,30 +117,25 @@ st.set_page_config(
 
 # CSS 스타일 (초등학생 친화적 + 파스텔 테마 + 글씨 크기 조절)
 def get_font_size_css():
-    """글씨 크기에 따른 CSS 변수 반환 - 컴팩트 버전"""
-    size = st.session_state.get("font_size", "normal")
+    """글씨 크기에 따른 CSS 변수 반환"""
+    size = st.session_state.get("font_size", "large")
     sizes = {
-        "small": {"base": "14px", "header": "1.6rem", "step": "1.2rem", "progress": "1.4rem"},
-        "normal": {"base": "15px", "header": "1.8rem", "step": "1.4rem", "progress": "1.6rem"},
-        "large": {"base": "18px", "header": "2.2rem", "step": "1.7rem", "progress": "2rem"},
+        "small": {"base": "16px", "header": "2rem", "step": "1.5rem", "progress": "1.8rem"},
+        "normal": {"base": "18px", "header": "2.5rem", "step": "1.8rem", "progress": "2rem"},
+        "large": {"base": "22px", "header": "3rem", "step": "2.2rem", "progress": "2.5rem"},
     }
-    return sizes.get(size, sizes["normal"])
+    return sizes.get(size, sizes["large"])
 
-# 기본 글씨 크기 설정 (컴팩트 레이아웃 기본값: 보통)
+# 기본 글씨 크기 설정 (초등학생용 기본값: 크게)
 if "font_size" not in st.session_state:
-    st.session_state.font_size = "normal"
+    st.session_state.font_size = "large"
 
 font_sizes = get_font_size_css()
 
 st.markdown(f"""
 <style>
     /* ============================================ */
-    /* 작가의집 책쓰기 코칭 - 전문 테마 CSS         */
-    /* 초등학생도 쉽게 + 전문적인 디자인            */
-    /* ============================================ */
-
-    /* Google Fonts 로드 */
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap');
+    /* 초등학생 친화적 파스텔 테마 CSS              */
     /* ============================================ */
 
     /* CSS 변수 정의 */
@@ -151,51 +146,34 @@ st.markdown(f"""
         --font-progress: {font_sizes['progress']};
 
         /* 파스텔 색상 팔레트 (WCAG AA 대비율 준수) */
-        /* 전문 코칭 메인 색상 (네이비 + 골드) */
-        --primary-navy: #1e3a5f;
-        --primary-navy-light: #2d5a87;
-        --primary-navy-dark: #0f2540;
-        --accent-gold: #c9a962;
-        --accent-gold-light: #e0c989;
-        --accent-gold-dark: #a68b4b;
-
-        /* 보조 색상 팔레트 */
-        --pastel-pink: #fff5f7;
-        --pastel-blue: #ebf8ff;
-        --pastel-green: #f0fff4;
-        --pastel-yellow: #fffff0;
-        --pastel-purple: #faf5ff;
-        --pastel-orange: #fffaf0;
+        --pastel-pink: #FFE4EC;
+        --pastel-blue: #E8F4FD;
+        --pastel-green: #E8F5E9;
+        --pastel-yellow: #FFF9E6;
+        --pastel-purple: #F3E5F5;
+        --pastel-orange: #FFF3E0;
 
         /* 접근성 향상된 텍스트 색상 (WCAG AA 4.5:1 이상) */
-        --text-primary: #1a202c;
-        --text-secondary: #4a5568;
-        --text-on-green: #22543d;
-        --text-on-blue: #2a4365;
-        --text-on-orange: #c05621;
-        --text-muted: #718096;
+        --text-primary: #1a1a1a;
+        --text-secondary: #424242;
+        --text-on-green: #1B5E20;
+        --text-on-blue: #0D47A1;
+        --text-on-orange: #E65100;
+        --text-muted: #616161;
 
         /* 무지개 색상 (진행 표시용) */
-        --rainbow-1: #1e3a5f;
-        --rainbow-2: #2d5a87;
-        --rainbow-3: #4299e1;
-        --rainbow-4: #c9a962;
-        --rainbow-5: #e0c989;
+        --rainbow-1: #FF6B6B;
+        --rainbow-2: #FFA94D;
+        --rainbow-3: #FFD43B;
+        --rainbow-4: #69DB7C;
+        --rainbow-5: #4DABF7;
 
-        /* 터치 타겟 최소 크기 (컴팩트) */
-        --touch-target-min: 44px;
-        --touch-target-comfortable: 48px;
+        /* 터치 타겟 최소 크기 */
+        --touch-target-min: 48px;
+        --touch-target-comfortable: 56px;
 
         /* 포커스 스타일 */
-        --focus-color: #2d5a87;
-
-        /* 그림자 시스템 */
-        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        --shadow-gold: 0 8px 30px rgba(201, 169, 98, 0.25);
-        --shadow-navy: 0 8px 30px rgba(30, 58, 95, 0.2);
+        --focus-color: #1976D2;
         --focus-width: 3px;
 
         /* 모바일 safe-area (노치/홈 인디케이터 대응) */
@@ -205,23 +183,10 @@ st.markdown(f"""
         --safe-area-inset-right: env(safe-area-inset-right, 0px);
     }}
 
-    /* 기본 폰트 설정 - 한글 및 특수문자/이모지 지원 강화 (컴팩트) */
+    /* 기본 폰트 크기 (초등학생용 크게) */
     html, body, [class*="st-"] {{
-        font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕',
-                     -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Segoe UI Emoji',
-                     'Segoe UI Symbol', 'Noto Color Emoji', sans-serif !important;
         font-size: var(--font-base) !important;
-        line-height: 1.5 !important;
-        color: var(--text-primary);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: optimizeLegibility;
-    }}
-
-    /* 이모지 전용 폰트 설정 */
-    .emoji, [class*="emoji"] {{
-        font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-                     'Noto Color Emoji', 'Android Emoji', 'EmojiSymbols', sans-serif !important;
+        line-height: 1.8 !important;
     }}
 
     /* 스크롤 동작 최적화 */
@@ -232,42 +197,39 @@ st.markdown(f"""
 
     /* 텍스트 선택 색상 (접근성) */
     ::selection {{
-        background-color: rgba(201, 169, 98, 0.3);
+        background-color: rgba(25, 118, 210, 0.3);
         color: inherit;
     }}
 
-    /* 메인 헤더 - 전문적 스타일 (컴팩트) */
+    /* 메인 헤더 */
     .main-header {{
         font-size: var(--font-header);
-        font-weight: 700;
-        color: white;
-        margin-bottom: 0.8rem;
+        font-weight: bold;
+        color: #1a1a1a;
+        margin-bottom: 1.2rem;
         letter-spacing: -0.5px;
-        background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-navy-light) 100%);
-        padding: 0.8rem 1.2rem;
-        border-radius: 12px;
+        background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-blue));
+        padding: 1rem 1.5rem;
+        border-radius: 15px;
         text-align: center;
-        box-shadow: var(--shadow-navy);
-        border-bottom: 3px solid var(--accent-gold);
     }}
 
-    /* 단계 헤더 - 전문적 스타일 (컴팩트) */
+    /* 단계 헤더 (h2 태그로 사용) */
     .step-header {{
         font-size: var(--font-step);
-        font-weight: 700;
-        color: var(--primary-navy);
+        font-weight: bold;
+        color: var(--text-on-green);
         margin: 0;
-        margin-top: 0.8rem;
-        margin-bottom: 0.6rem;
-        padding: 0.6rem 1rem;
-        background: linear-gradient(90deg, var(--pastel-blue) 0%, rgba(235, 248, 255, 0.3) 100%);
-        border-radius: 10px;
-        border-left: 4px solid var(--accent-gold);
-        box-shadow: var(--shadow-sm);
+        margin-top: 1.2rem;
+        margin-bottom: 1rem;
+        padding: 1rem 1.2rem;
+        background: linear-gradient(90deg, var(--pastel-green) 0%, transparent 100%);
+        border-radius: 15px;
+        border-left: 6px solid #4CAF50;
     }}
     h2.step-header {{
-        margin-top: 0.8rem;
-        margin-bottom: 0.6rem;
+        margin-top: 1.2rem;
+        margin-bottom: 1rem;
     }}
 
     /* ============================================ */
@@ -332,16 +294,16 @@ st.markdown(f"""
     }}
 
     /* ============================================ */
-    /* 버튼 스타일 (터치 친화적 44px+ 타겟, 컴팩트)  */
+    /* 버튼 스타일 (터치 친화적 48px+ 타겟)         */
     /* ============================================ */
     .stButton > button {{
         transition: all 0.2s ease-in-out;
-        min-height: 44px !important;
-        min-width: 44px !important;
-        font-size: 0.95rem !important;
+        min-height: var(--touch-target-comfortable) !important;
+        min-width: var(--touch-target-min) !important;
+        font-size: 1.1rem !important;
         font-weight: 600 !important;
-        border-radius: 10px !important;
-        padding: 0.5rem 1rem !important;
+        border-radius: 15px !important;
+        padding: 0.8rem 1.5rem !important;
         border: 2px solid transparent !important;
         cursor: pointer;
         touch-action: manipulation; /* 더블탭 줌 방지 */
@@ -363,30 +325,11 @@ st.markdown(f"""
         transform: none !important;
     }}
 
-    /* 프라이머리 버튼 - 네이비 테마 */
+    /* 프라이머리 버튼 */
     .stButton > button[kind="primary"] {{
-        background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-navy-light) 100%) !important;
+        background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%) !important;
         color: white !important;
         font-weight: 700 !important;
-        border-bottom: 3px solid var(--accent-gold) !important;
-        box-shadow: var(--shadow-md) !important;
-    }}
-    .stButton > button[kind="primary"]:hover {{
-        background: linear-gradient(135deg, var(--primary-navy-light) 0%, var(--primary-navy) 100%) !important;
-        box-shadow: var(--shadow-lg) !important;
-        transform: translateY(-2px);
-    }}
-
-    /* 세컨더리 버튼 - 골드 테마 */
-    .stButton > button[kind="secondary"] {{
-        background: white !important;
-        color: var(--primary-navy) !important;
-        border: 2px solid var(--accent-gold) !important;
-        font-weight: 600 !important;
-    }}
-    .stButton > button[kind="secondary"]:hover {{
-        background: var(--pastel-yellow) !important;
-        border-color: var(--accent-gold-dark) !important;
     }}
 
     /* 터치 피드백 (모바일) */
@@ -407,570 +350,107 @@ st.markdown(f"""
         pointer-events: none;
     }}
 
-    /* ============================================ */
-    /* UX 개선: 향상된 로딩 애니메이션 (컴팩트)     */
-    /* ============================================ */
-    .ux-loading-container {{
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 15px;
-        padding: 1rem;
-        margin: 0.8rem 0;
-        text-align: center;
-        color: white;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        animation: ux-loading-pulse 2s ease-in-out infinite;
-    }}
-    @keyframes ux-loading-pulse {{
-        0%, 100% {{ transform: scale(1); box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3); }}
-        50% {{ transform: scale(1.02); box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5); }}
-    }}
-    .ux-loading-spinner {{
-        display: inline-block;
-        width: 40px;
-        height: 40px;
-        border: 4px solid rgba(255,255,255,0.3);
-        border-top-color: #FFD700;
-        border-radius: 50%;
-        animation: ux-spin 1s linear infinite;
-        margin-bottom: 0.5rem;
-    }}
-    @keyframes ux-spin {{
-        to {{ transform: rotate(360deg); }}
-    }}
-    .ux-loading-emoji {{
-        font-size: 2rem;
-        animation: ux-bounce-emoji 1s ease-in-out infinite;
-        display: inline-block;
-    }}
-    @keyframes ux-bounce-emoji {{
-        0%, 100% {{ transform: translateY(0); }}
-        50% {{ transform: translateY(-15px); }}
-    }}
-    .ux-loading-text {{
-        font-size: 1.1rem;
-        font-weight: bold;
-        margin: 0.5rem 0;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-    }}
-    .ux-loading-subtext {{
-        font-size: 0.9rem;
-        opacity: 0.9;
-        margin: 0.3rem 0;
-    }}
-    .ux-loading-progress {{
-        background: rgba(255,255,255,0.3);
-        border-radius: 10px;
-        height: 8px;
-        margin: 0.5rem auto;
-        max-width: 250px;
-        overflow: hidden;
-    }}
-    .ux-loading-progress-bar {{
-        background: linear-gradient(90deg, #FFD700, #FFA500, #FF6B6B);
-        height: 100%;
-        border-radius: 15px;
-        transition: width 0.5s ease;
-        animation: ux-progress-glow 1.5s ease-in-out infinite;
-    }}
-    @keyframes ux-progress-glow {{
-        0%, 100% {{ box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }}
-        50% {{ box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }}
-    }}
-    .ux-loading-percent {{
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #FFD700;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }}
-    .ux-loading-tips {{
-        background: rgba(255,255,255,0.15);
-        border-radius: 8px;
-        padding: 0.5rem 0.8rem;
-        margin-top: 0.5rem;
-        font-size: 0.85rem;
-    }}
-
-    /* ============================================ */
-    /* UX 개선: 토스트 알림 스타일                  */
-    /* ============================================ */
-    .ux-toast {{
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 10000;
-        padding: 1rem 1.5rem;
-        border-radius: 15px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        animation: ux-toast-slide-in 0.5s ease forwards;
-        max-width: 350px;
-    }}
-    @keyframes ux-toast-slide-in {{
-        from {{ transform: translateX(100%); opacity: 0; }}
-        to {{ transform: translateX(0); opacity: 1; }}
-    }}
-    .ux-toast-success {{
-        background: linear-gradient(135deg, #4CAF50, #2E7D32);
-        color: white;
-    }}
-    .ux-toast-error {{
-        background: linear-gradient(135deg, #f44336, #c62828);
-        color: white;
-    }}
-    .ux-toast-info {{
-        background: linear-gradient(135deg, #2196F3, #1565C0);
-        color: white;
-    }}
-    .ux-toast-warning {{
-        background: linear-gradient(135deg, #FF9800, #E65100);
-        color: white;
-    }}
-    .ux-toast-icon {{
-        font-size: 1.5rem;
-        margin-right: 0.5rem;
-    }}
-    .ux-toast-message {{
-        font-size: 1.1rem;
-        font-weight: 600;
-    }}
-
-    /* ============================================ */
-    /* UX 개선: 화려한 축하 효과 (컴팩트)           */
-    /* ============================================ */
-    .ux-celebration {{
-        background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6B6B 100%);
-        border-radius: 15px;
-        padding: 1.2rem;
-        margin: 0.8rem 0;
-        text-align: center;
-        color: white;
-        box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
-        animation: ux-celebration-glow 1.5s ease-in-out infinite;
-        position: relative;
-        overflow: hidden;
-    }}
-    @keyframes ux-celebration-glow {{
-        0%, 100% {{ box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4); }}
-        50% {{ box-shadow: 0 20px 60px rgba(255, 215, 0, 0.6); }}
-    }}
-    .ux-celebration::before {{
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 10px,
-            rgba(255,255,255,0.1) 10px,
-            rgba(255,255,255,0.1) 20px
-        );
-        animation: ux-confetti-move 3s linear infinite;
-    }}
-    @keyframes ux-confetti-move {{
-        from {{ transform: translate(0, 0); }}
-        to {{ transform: translate(50px, 50px); }}
-    }}
-    .ux-celebration-content {{
-        position: relative;
-        z-index: 1;
-    }}
-    .ux-celebration-emoji {{
-        font-size: 2.5rem;
-        animation: ux-celebration-bounce 0.5s ease-in-out infinite alternate;
-        display: inline-block;
-        margin: 0 0.2rem;
-    }}
-    .ux-celebration-emoji:nth-child(2) {{ animation-delay: 0.1s; }}
-    .ux-celebration-emoji:nth-child(3) {{ animation-delay: 0.2s; }}
-    @keyframes ux-celebration-bounce {{
-        from {{ transform: translateY(0) scale(1); }}
-        to {{ transform: translateY(-10px) scale(1.1); }}
-    }}
-    .ux-celebration-title {{
-        font-size: 1.4rem;
-        font-weight: bold;
-        margin: 0.5rem 0;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-    }}
-    .ux-celebration-message {{
-        font-size: 1rem;
-        margin: 0.3rem 0;
-    }}
-
-    /* ============================================ */
-    /* UX 개선: 네비게이션 현재 위치 표시 (컴팩트)  */
-    /* ============================================ */
-    .ux-breadcrumb {{
-        background: linear-gradient(90deg, var(--pastel-blue), var(--pastel-purple));
-        padding: 0.5rem 0.8rem;
-        border-radius: 10px;
-        margin-bottom: 0.8rem;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 0.3rem;
-    }}
-    .ux-breadcrumb-item {{
-        display: inline-flex;
-        align-items: center;
-        font-size: 0.85rem;
-        color: #424242;
-        padding: 0.1rem 0;
-    }}
-    .ux-breadcrumb-item.completed {{
-        color: #2E7D32;
-    }}
-    .ux-breadcrumb-item.active {{
-        font-weight: bold;
-        color: #1976D2;
-        background: white;
-        padding: 0.3rem 0.8rem;
-        border-radius: 20px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }}
-    .ux-breadcrumb-separator {{
-        color: #9E9E9E;
-        margin: 0 0.2rem;
-        font-size: 0.85rem;
-    }}
-
-    /* ============================================ */
-    /* UX 개선: 실시간 글자 수 카운터               */
-    /* ============================================ */
-    .ux-char-counter {{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.5rem 1rem;
-        background: #F5F5F5;
-        border-radius: 10px;
-        margin-top: 0.5rem;
-        font-size: 0.95rem;
-    }}
-    .ux-char-count {{
-        font-weight: bold;
-        color: #1976D2;
-    }}
-    .ux-char-count.warning {{
-        color: #FF9800;
-    }}
-    .ux-char-count.danger {{
-        color: #f44336;
-    }}
-    .ux-char-count.success {{
-        color: #4CAF50;
-    }}
-    .ux-char-bar {{
-        flex: 1;
-        height: 8px;
-        background: #E0E0E0;
-        border-radius: 4px;
-        margin: 0 1rem;
-        overflow: hidden;
-    }}
-    .ux-char-bar-fill {{
-        height: 100%;
-        border-radius: 4px;
-        transition: width 0.3s ease, background 0.3s ease;
-    }}
-
-    /* ============================================ */
-    /* UX 개선: 단계별 팁 박스 (컴팩트)             */
-    /* ============================================ */
-    .ux-step-tip {{
-        background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
-        border: 2px solid #81C784;
-        border-radius: 10px;
-        padding: 0.8rem 1rem 0.6rem 1rem;
-        margin: 0.5rem 0;
-        position: relative;
-    }}
-    .ux-step-tip::before {{
-        content: '이렇게 해보세요!';
-        position: absolute;
-        top: -10px;
-        left: 10px;
-        background: #4CAF50;
-        color: white;
-        padding: 0.2rem 0.6rem;
-        border-radius: 15px;
-        font-size: 0.75rem;
-        font-weight: bold;
-    }}
-    .ux-step-tip-content {{
-        margin-top: 0.2rem;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        color: #2E7D32;
-    }}
-    .ux-step-tip ul {{
-        margin: 0.5rem 0;
-        padding-left: 1.5rem;
-    }}
-    .ux-step-tip li {{
-        margin: 0.3rem 0;
-    }}
-
-    /* ============================================ */
-    /* UX 개선: 눈에 띄는 FAQ 버튼                  */
-    /* ============================================ */
-    .ux-faq-floating {{
-        position: fixed;
-        bottom: 100px;
-        right: 30px;
-        z-index: 999;
-        background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-        color: white;
-        border: none;
-        border-radius: 50px;
-        padding: 12px 20px;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
-        transition: all 0.3s ease;
-        animation: ux-faq-pulse 2s infinite;
-    }}
-    @keyframes ux-faq-pulse {{
-        0%, 100% {{ box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4); }}
-        50% {{ box-shadow: 0 8px 30px rgba(255, 107, 107, 0.6); }}
-    }}
-    .ux-faq-floating:hover {{
-        transform: translateY(-3px) scale(1.05);
-    }}
-
-    /* ============================================ */
-    /* UX 개선: 툴팁 스타일                         */
-    /* ============================================ */
-    .ux-tooltip {{
-        position: relative;
-        display: inline-block;
-        cursor: help;
-    }}
-    .ux-tooltip-icon {{
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 20px;
-        height: 20px;
-        background: #64B5F6;
-        color: white;
-        border-radius: 50%;
-        font-size: 0.8rem;
-        font-weight: bold;
-        margin-left: 5px;
-    }}
-    .ux-tooltip-text {{
-        visibility: hidden;
-        position: absolute;
-        bottom: 125%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #333;
-        color: white;
-        padding: 0.8rem 1rem;
-        border-radius: 10px;
-        font-size: 0.9rem;
-        width: 250px;
-        text-align: center;
-        z-index: 100;
-        opacity: 0;
-        transition: opacity 0.3s, visibility 0.3s;
-    }}
-    .ux-tooltip:hover .ux-tooltip-text {{
-        visibility: visible;
-        opacity: 1;
-    }}
-    .ux-tooltip-text::after {{
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        border: 8px solid transparent;
-        border-top-color: #333;
-    }}
-
-    /* ============================================ */
-    /* UX 개선: 단계 건너뛰기 방지 경고              */
-    /* ============================================ */
-    .ux-step-locked {{
-        background: linear-gradient(135deg, #FFCDD2, #EF9A9A);
-        border: 3px dashed #E57373;
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        text-align: center;
-    }}
-    .ux-step-locked-icon {{
-        font-size: 3rem;
-        margin-bottom: 0.5rem;
-    }}
-    .ux-step-locked-text {{
-        font-size: 1.1rem;
-        color: #C62828;
-        font-weight: 600;
-    }}
-    .ux-step-locked-hint {{
-        font-size: 0.95rem;
-        color: #D32F2F;
-        margin-top: 0.5rem;
-    }}
-
-    /* ============================================ */
-    /* UX 개선: 자동 스크롤 대상 강조               */
-    /* ============================================ */
-    .ux-scroll-target {{
-        animation: ux-highlight-flash 1s ease-in-out;
-        scroll-margin-top: 100px;
-    }}
-    @keyframes ux-highlight-flash {{
-        0%, 100% {{ background-color: transparent; }}
-        50% {{ background-color: rgba(255, 235, 59, 0.5); }}
-    }}
-
-    /* ============================================ */
-    /* UX 개선: 입력 검증 상태 표시                 */
-    /* ============================================ */
-    .ux-input-valid {{
-        border-color: #4CAF50 !important;
-        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2) !important;
-    }}
-    .ux-input-invalid {{
-        border-color: #f44336 !important;
-        box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2) !important;
-    }}
-    .ux-validation-message {{
-        font-size: 0.9rem;
-        margin-top: 0.3rem;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-    }}
-    .ux-validation-message.valid {{
-        color: #4CAF50;
-    }}
-    .ux-validation-message.invalid {{
-        color: #f44336;
-    }}
-
-    /* 진행률 박스 - 전문적 네이비/골드 테마 (컴팩트) */
+    /* 진행률 박스 (무지개 그라데이션) */
     .progress-box {{
-        background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-navy-light) 50%, var(--accent-gold) 100%);
+        background: linear-gradient(135deg, var(--rainbow-1), var(--rainbow-2), var(--rainbow-3), var(--rainbow-4), var(--rainbow-5));
         color: white;
-        padding: 0.8rem 1.2rem;
-        border-radius: 12px;
-        margin: 0.6rem 0;
+        padding: 2rem;
+        border-radius: 20px;
+        margin: 1.5rem 0;
         text-align: center;
-        box-shadow: var(--shadow-md);
-        border: 1px solid rgba(201, 169, 98, 0.3);
-        position: relative;
-        overflow: hidden;
-    }}
-    .progress-box::before {{
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-light), var(--accent-gold));
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }}
     .progress-text {{
         font-size: var(--font-progress);
-        font-weight: 700;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        letter-spacing: 0.3px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     }}
 
-    /* 별 진행률 표시 (컴팩트) */
+    /* 별 진행률 표시 */
     .star-progress {{
-        font-size: 1.3rem;
-        letter-spacing: 3px;
-        margin: 0.3rem 0;
+        font-size: 2rem;
+        letter-spacing: 5px;
+        margin: 0.5rem 0;
     }}
 
-    /* 현재 섹션 박스 (컴팩트) */
+    /* 현재 섹션 박스 */
     .current-section-box {{
         background: var(--pastel-yellow);
-        border-left: 5px solid #FFA000;
-        padding: 0.6rem 1rem;
-        margin: 0.6rem 0;
-        border-radius: 0 12px 12px 0;
-        font-size: 1rem;
+        border-left: 8px solid #FFA000;
+        padding: 1.5rem 2rem;
+        margin: 1.5rem 0;
+        border-radius: 0 20px 20px 0;
+        font-size: 1.2rem;
     }}
 
-    /* 완료 섹션 (컴팩트) */
+    /* 완료 섹션 */
     .completed-section {{
         background: var(--pastel-green);
-        padding: 0.5rem 0.8rem;
-        border-radius: 10px;
-        margin: 0.3rem 0;
+        padding: 1rem 1.5rem;
+        border-radius: 15px;
+        margin: 0.5rem 0;
         color: #1B5E20;
         font-weight: 600;
     }}
 
-    /* 대기 섹션 (컴팩트) */
+    /* 대기 섹션 */
     .pending-section {{
         background: #F5F5F5;
-        padding: 0.5rem 0.8rem;
-        border-radius: 10px;
-        margin: 0.3rem 0;
+        padding: 1rem 1.5rem;
+        border-radius: 15px;
+        margin: 0.5rem 0;
         color: #757575;
     }}
 
     .big-button {{
-        font-size: 1.2rem !important;
-        padding: 0.8rem 1.5rem !important;
+        font-size: 1.5rem !important;
+        padding: 1.2rem 2.5rem !important;
     }}
 
-    /* 도움말 박스 (컴팩트) */
+    /* 도움말 박스 */
     .help-box {{
         background: var(--pastel-blue);
-        border: 2px solid #64B5F6;
-        padding: 0.8rem 1rem;
-        border-radius: 12px;
-        margin: 0.6rem 0;
-        font-size: 0.95rem;
-        line-height: 1.5;
+        border: 3px solid #64B5F6;
+        padding: 1.5rem 2rem;
+        border-radius: 20px;
+        margin: 1.5rem 0;
+        font-size: 1.1rem;
+        line-height: 1.8;
     }}
 
-    /* 힌트 박스 (이렇게 써보세요!) (컴팩트) */
+    /* 힌트 박스 (이렇게 써보세요!) */
     .hint-box {{
         background: var(--pastel-purple);
-        border: 2px dashed #9C27B0;
-        padding: 0.6rem 0.8rem;
-        border-radius: 10px;
-        margin: 0.5rem 0;
-        font-size: 0.9rem;
+        border: 3px dashed #9C27B0;
+        padding: 1.2rem 1.5rem;
+        border-radius: 15px;
+        margin: 1rem 0;
+        font-size: 1rem;
     }}
     .hint-box::before {{
         content: "이렇게 써보세요!";
         display: block;
         font-weight: bold;
         color: #7B1FA2;
-        margin-bottom: 0.3rem;
-        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
     }}
 
-    /* 경고 박스 (컴팩트) */
+    /* 경고 박스 */
     .warning-box {{
         background: var(--pastel-orange);
-        border: 2px solid #FF9800;
-        padding: 0.8rem 1rem;
-        border-radius: 12px;
-        margin: 0.6rem 0;
+        border: 3px solid #FF9800;
+        padding: 1.5rem 2rem;
+        border-radius: 20px;
+        margin: 1.5rem 0;
     }}
 
-    /* 성공 박스 (컴팩트) */
+    /* 성공 박스 */
     .success-box {{
         background: var(--pastel-green);
-        border: 2px solid #4CAF50;
-        padding: 0.8rem 1rem;
-        border-radius: 12px;
-        margin: 0.6rem 0;
+        border: 3px solid #4CAF50;
+        padding: 1.5rem 2rem;
+        border-radius: 20px;
+        margin: 1.5rem 0;
     }}
 
     /* 저장 상태 표시 */
@@ -1002,19 +482,17 @@ st.markdown(f"""
         animation: bounce 0.5s ease-in-out infinite;
     }}
 
-    /* 뱃지/스티커 스타일 - 전문적 */
+    /* 뱃지/스티커 스타일 */
     .badge {{
         display: inline-block;
-        background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
-        color: var(--primary-navy-dark);
-        padding: 0.5rem 1.2rem;
+        background: linear-gradient(135deg, #FFD700, #FFA000);
+        color: #333;
+        padding: 0.5rem 1rem;
         border-radius: 25px;
-        font-weight: 700;
+        font-weight: bold;
         font-size: 1rem;
         margin: 0.3rem;
-        box-shadow: var(--shadow-gold);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        letter-spacing: 0.5px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     }}
 
     /* 글씨 크기 조절 버튼 */
@@ -1028,19 +506,19 @@ st.markdown(f"""
         color: white !important;
     }}
 
-    /* 선택 모드 카드 - 개선된 버전 (컴팩트) */
+    /* 선택 모드 카드 - 개선된 버전 */
     .mode-card {{
         background: white;
-        border: 3px solid #E0E0E0;
-        border-radius: 15px;
-        padding: 1rem 0.8rem;
-        margin: 0.5rem 0;
+        border: 4px solid #E0E0E0;
+        border-radius: 25px;
+        padding: 2.5rem 2rem;
+        margin: 1rem 0;
         text-align: center;
         cursor: pointer;
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
-        min-height: 140px;
+        min-height: 220px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1058,22 +536,22 @@ st.markdown(f"""
         transition: opacity 0.3s ease;
     }}
     .mode-card:hover {{
-        border-color: var(--accent-gold);
+        border-color: #4CAF50;
         transform: translateY(-8px) scale(1.02);
-        box-shadow: var(--shadow-xl);
+        box-shadow: 0 15px 40px rgba(76, 175, 80, 0.25);
     }}
     .mode-card:hover::before {{
         opacity: 1;
     }}
-    .mode-card.chat-card {{ background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%); border-color: var(--primary-navy-light); }}
-    .mode-card.chat-card:hover {{ border-color: var(--primary-navy); box-shadow: var(--shadow-navy); }}
-    .mode-card.voice-card {{ background: linear-gradient(135deg, #fffff0 0%, #fefcbf 100%); border-color: var(--accent-gold); }}
-    .mode-card.voice-card:hover {{ border-color: var(--accent-gold-dark); box-shadow: var(--shadow-gold); }}
-    .mode-card.youtube-card {{ background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); border-color: #fc8181; }}
-    .mode-card.youtube-card:hover {{ border-color: #e53e3e; box-shadow: 0 15px 40px rgba(229, 62, 62, 0.2); }}
+    .mode-card.chat-card {{ background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); border-color: #64B5F6; }}
+    .mode-card.chat-card:hover {{ border-color: #1976D2; box-shadow: 0 15px 40px rgba(25, 118, 210, 0.3); }}
+    .mode-card.voice-card {{ background: linear-gradient(135deg, #FCE4EC 0%, #F8BBD9 100%); border-color: #F48FB1; }}
+    .mode-card.voice-card:hover {{ border-color: #C2185B; box-shadow: 0 15px 40px rgba(194, 24, 91, 0.3); }}
+    .mode-card.youtube-card {{ background: linear-gradient(135deg, #FFEBEE 0%, #FFCDD2 100%); border-color: #EF9A9A; }}
+    .mode-card.youtube-card:hover {{ border-color: #D32F2F; box-shadow: 0 15px 40px rgba(211, 47, 47, 0.3); }}
     .mode-card .emoji {{
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
+        font-size: 4rem;
+        margin-bottom: 1rem;
         animation: float 3s ease-in-out infinite;
     }}
     @keyframes float {{
@@ -1081,166 +559,135 @@ st.markdown(f"""
         50% {{ transform: translateY(-8px); }}
     }}
     .mode-card .title {{
-        font-size: 1.1rem;
+        font-size: 1.5rem;
         font-weight: bold;
         color: #333;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.5rem;
     }}
     .mode-card .desc {{
-        font-size: 0.9rem;
+        font-size: 1.1rem;
         color: #555;
-        margin-top: 0.3rem;
-        line-height: 1.4;
+        margin-top: 0.5rem;
+        line-height: 1.5;
     }}
     .mode-card .feature-list {{
-        font-size: 0.85rem;
+        font-size: 0.95rem;
         color: #666;
-        margin-top: 0.5rem;
+        margin-top: 0.8rem;
         text-align: left;
-        padding: 0 0.3rem;
+        padding: 0 0.5rem;
     }}
     .mode-card .feature-list li {{
-        margin: 0.2rem 0;
+        margin: 0.3rem 0;
     }}
 
-    /* 환영 화면 헤더 - 작가의집 브랜딩 (컴팩트) */
+    /* 환영 화면 헤더 */
     .welcome-header {{
         text-align: center;
-        padding: 1.2rem 1.5rem;
-        background: linear-gradient(135deg, var(--primary-navy-dark) 0%, var(--primary-navy) 50%, var(--primary-navy-light) 100%);
+        padding: 2.5rem 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f953c6 100%);
         color: white;
-        border-radius: 15px;
-        margin-bottom: 1rem;
-        box-shadow: var(--shadow-lg);
-        position: relative;
-        overflow: hidden;
+        border-radius: 30px;
+        margin-bottom: 2rem;
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        animation: gradient-shift 8s ease infinite;
+        background-size: 200% 200%;
     }}
-    .welcome-header::before {{
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--accent-gold-dark), var(--accent-gold), var(--accent-gold-light), var(--accent-gold), var(--accent-gold-dark));
-    }}
-    .welcome-header::after {{
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(ellipse at top right, rgba(201, 169, 98, 0.15) 0%, transparent 50%);
-        pointer-events: none;
+    @keyframes gradient-shift {{
+        0% {{ background-position: 0% 50%; }}
+        50% {{ background-position: 100% 50%; }}
+        100% {{ background-position: 0% 50%; }}
     }}
     .welcome-header .logo {{
-        font-size: 2.5rem;
-        margin-bottom: 0.4rem;
-        filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
-    }}
-    .welcome-header .brand-badge {{
-        display: inline-block;
-        background: var(--accent-gold);
-        color: var(--primary-navy-dark);
-        padding: 0.2rem 0.8rem;
-        border-radius: 15px;
-        font-size: 0.75rem;
-        font-weight: 700;
+        font-size: 5rem;
         margin-bottom: 0.5rem;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
+        animation: bounce-logo 2s ease infinite;
+    }}
+    @keyframes bounce-logo {{
+        0%, 100% {{ transform: scale(1); }}
+        50% {{ transform: scale(1.1); }}
     }}
     .welcome-header .app-name {{
-        font-size: 1.8rem;
-        font-weight: 800;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        margin-bottom: 0.2rem;
-        letter-spacing: -0.5px;
-    }}
-    .welcome-header .app-subtitle {{
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--accent-gold-light);
-        margin-bottom: 0.4rem;
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        margin-bottom: 0.5rem;
     }}
     .welcome-header .tagline {{
-        font-size: 0.9rem;
-        opacity: 0.9;
-        font-weight: 400;
-        line-height: 1.4;
+        font-size: 1.3rem;
+        opacity: 0.95;
     }}
 
-    /* 사용자 타입 선택 카드 (컴팩트) */
+    /* 사용자 타입 선택 카드 */
     .user-type-card {{
         background: white;
-        border: 3px solid #E0E0E0;
-        border-radius: 15px;
-        padding: 1rem;
-        margin: 0.5rem 0;
+        border: 4px solid #E0E0E0;
+        border-radius: 25px;
+        padding: 2rem;
+        margin: 1rem 0;
         text-align: center;
         cursor: pointer;
         transition: all 0.3s ease;
-        min-height: 120px;
+        min-height: 180px;
     }}
     .user-type-card:hover {{
         transform: translateY(-5px);
         box-shadow: 0 12px 30px rgba(0,0,0,0.15);
     }}
     .user-type-card.new-user {{
-        background: linear-gradient(135deg, var(--pastel-blue) 0%, #bee3f8 100%);
-        border-color: var(--primary-navy-light);
+        background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+        border-color: #81C784;
     }}
     .user-type-card.new-user:hover {{
-        border-color: var(--primary-navy);
-        box-shadow: var(--shadow-navy);
+        border-color: #4CAF50;
+        box-shadow: 0 12px 30px rgba(76, 175, 80, 0.3);
     }}
     .user-type-card.returning-user {{
-        background: linear-gradient(135deg, var(--pastel-yellow) 0%, #fefcbf 100%);
-        border-color: var(--accent-gold);
+        background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+        border-color: #64B5F6;
     }}
     .user-type-card.returning-user:hover {{
-        border-color: var(--accent-gold-dark);
-        box-shadow: var(--shadow-gold);
+        border-color: #1976D2;
+        box-shadow: 0 12px 30px rgba(25, 118, 210, 0.3);
     }}
     .user-type-card .card-emoji {{
-        font-size: 2.2rem;
-        margin-bottom: 0.4rem;
+        font-size: 3.5rem;
+        margin-bottom: 0.8rem;
     }}
     .user-type-card .card-title {{
-        font-size: 1.1rem;
+        font-size: 1.4rem;
         font-weight: bold;
         color: #333;
     }}
     .user-type-card .card-desc {{
-        font-size: 0.85rem;
+        font-size: 1rem;
         color: #666;
-        margin-top: 0.3rem;
+        margin-top: 0.5rem;
     }}
 
-    /* 온보딩 튜토리얼 (컴팩트) */
+    /* 온보딩 튜토리얼 */
     .onboarding-container {{
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-radius: 15px;
-        padding: 1rem;
-        margin: 0.8rem 0;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        border-radius: 30px;
+        padding: 2.5rem;
+        margin: 2rem 0;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }}
     .onboarding-title {{
         text-align: center;
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         font-weight: bold;
         color: #333;
-        margin-bottom: 0.8rem;
+        margin-bottom: 2rem;
     }}
     .onboarding-step {{
         display: flex;
         align-items: center;
         background: white;
-        border-radius: 12px;
-        padding: 0.8rem;
-        margin: 0.5rem 0;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        border-radius: 20px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         transition: all 0.3s ease;
         animation: slide-in 0.5s ease forwards;
         opacity: 0;
@@ -1260,65 +707,63 @@ st.markdown(f"""
         box-shadow: 0 8px 25px rgba(0,0,0,0.12);
     }}
     .onboarding-step .step-number {{
-        width: 36px;
-        height: 36px;
-        background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-navy-light) 100%);
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1rem;
+        font-size: 1.5rem;
         font-weight: bold;
-        margin-right: 0.8rem;
+        margin-right: 1.2rem;
         flex-shrink: 0;
-        border: 2px solid var(--accent-gold);
-        box-shadow: var(--shadow-sm);
     }}
     .onboarding-step .step-content {{
         flex: 1;
     }}
     .onboarding-step .step-title {{
-        font-size: 0.95rem;
+        font-size: 1.2rem;
         font-weight: bold;
         color: #333;
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.3rem;
     }}
     .onboarding-step .step-desc {{
-        font-size: 0.85rem;
+        font-size: 1rem;
         color: #666;
     }}
     .onboarding-step .step-icon {{
-        font-size: 1.8rem;
-        margin-left: 0.5rem;
+        font-size: 2.5rem;
+        margin-left: 1rem;
     }}
 
-    /* 저장된 작업 목록 (컴팩트) */
+    /* 저장된 작업 목록 */
     .saved-work-container {{
         background: linear-gradient(135deg, #FFF9E6 0%, #FFE0B2 100%);
-        border-radius: 12px;
-        padding: 0.8rem;
-        margin: 0.6rem 0;
-        border: 2px solid #FFB74D;
+        border-radius: 25px;
+        padding: 2rem;
+        margin: 1.5rem 0;
+        border: 3px solid #FFB74D;
     }}
     .saved-work-title {{
-        font-size: 1rem;
+        font-size: 1.4rem;
         font-weight: bold;
         color: #E65100;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
         display: flex;
         align-items: center;
-        gap: 0.3rem;
+        gap: 0.5rem;
     }}
     .saved-work-item {{
         background: white;
-        border-radius: 10px;
-        padding: 0.6rem 0.8rem;
-        margin: 0.4rem 0;
+        border-radius: 15px;
+        padding: 1rem 1.2rem;
+        margin: 0.8rem 0;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
         transition: all 0.3s ease;
     }}
     .saved-work-item:hover {{
@@ -1329,20 +774,20 @@ st.markdown(f"""
         flex: 1;
     }}
     .saved-work-info .work-title {{
-        font-size: 0.95rem;
+        font-size: 1.1rem;
         font-weight: bold;
         color: #333;
     }}
     .saved-work-info .work-meta {{
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         color: #666;
-        margin-top: 0.2rem;
+        margin-top: 0.3rem;
     }}
     .saved-work-info .work-progress {{
-        font-size: 0.75rem;
+        font-size: 0.85rem;
         color: #4CAF50;
         font-weight: 600;
-        margin-top: 0.15rem;
+        margin-top: 0.2rem;
     }}
 
     /* 빠른 이어쓰기 버튼 */
@@ -1398,15 +843,15 @@ st.markdown(f"""
     }}
 
     /* ============================================ */
-    /* 입력 필드 (모바일 키보드 최적화, 컴팩트)    */
+    /* 입력 필드 (모바일 키보드 최적화)            */
     /* ============================================ */
     .stTextArea textarea, .stTextInput input {{
         font-size: var(--font-base) !important;
-        line-height: 1.5 !important;
-        padding: 10px 12px !important;
-        border-radius: 10px !important;
-        border: 2px solid #E0E0E0 !important;
-        min-height: 44px !important;
+        line-height: 1.8 !important;
+        padding: 15px 20px !important;
+        border-radius: 15px !important;
+        border: 3px solid #E0E0E0 !important;
+        min-height: var(--touch-target-min) !important;
         /* 모바일 키보드 가림 방지 */
         scroll-margin-bottom: 150px;
     }}
@@ -1421,23 +866,23 @@ st.markdown(f"""
         margin-bottom: 8px !important;
     }}
 
-    /* 셀렉트박스 (컴팩트) */
+    /* 셀렉트박스 */
     .stSelectbox > div > div {{
         font-size: var(--font-base) !important;
-        min-height: 44px !important;
-        border-radius: 10px !important;
+        min-height: var(--touch-target-comfortable) !important;
+        border-radius: 15px !important;
     }}
     .stSelectbox label {{
         font-weight: 600 !important;
         color: var(--text-primary) !important;
     }}
 
-    /* 체크박스와 라디오 버튼 터치 타겟 확대 (컴팩트) */
+    /* 체크박스와 라디오 버튼 터치 타겟 확대 */
     .stCheckbox > label, .stRadio > label {{
-        min-height: 44px !important;
+        min-height: var(--touch-target-min) !important;
         display: flex !important;
         align-items: center !important;
-        padding: 4px 0 !important;
+        padding: 8px 0 !important;
     }}
     .stCheckbox > label > span, .stRadio > label > span {{
         padding-left: 12px !important;
@@ -1480,13 +925,12 @@ st.markdown(f"""
         transition: all 0.2s;
     }}
     .preset-card:hover {{
-        border-color: var(--accent-gold);
-        box-shadow: var(--shadow-md);
+        border-color: #4CAF50;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }}
     .preset-card.selected {{
-        border-color: var(--primary-navy);
-        background: var(--pastel-blue);
-        border-width: 3px;
+        border-color: #4CAF50;
+        background: var(--pastel-green);
     }}
 
     /* ============================================ */
@@ -1495,7 +939,7 @@ st.markdown(f"""
     @media (max-width: 768px) {{
         /* 기본 설정 */
         html, body, [class*="st-"] {{
-            font-size: 15px !important;
+            font-size: 18px !important;
         }}
 
         /* 사이드바 숨김/축소 */
@@ -1507,91 +951,91 @@ st.markdown(f"""
             transform: translateX(0);
         }}
         [data-testid="stSidebarNav"] {{
-            padding-top: 0.5rem;
+            padding-top: 1rem;
         }}
 
         /* 메인 콘텐츠 */
         .main .block-container {{
-            padding: 0.5rem !important;
+            padding: 1rem !important;
             max-width: 100% !important;
         }}
 
         /* 헤더 */
         .main-header {{
-            font-size: 1.4rem !important;
-            padding: 0.6rem 0.8rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.8rem !important;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
         }}
         .step-header {{
-            font-size: 1.1rem !important;
-            padding: 0.5rem 0.8rem;
+            font-size: 1.4rem !important;
+            padding: 0.8rem 1rem;
         }}
 
         /* 진행률 박스 */
         .progress-box {{
-            padding: 0.6rem;
-            margin: 0.5rem 0;
+            padding: 1.2rem;
+            margin: 1rem 0;
         }}
         .progress-text {{
-            font-size: 1rem !important;
+            font-size: 1.4rem !important;
         }}
 
         /* 버튼 - 전체 너비 */
         .stButton > button {{
-            min-height: 44px !important;
-            font-size: 0.9rem !important;
+            min-height: var(--touch-target-comfortable) !important;
+            font-size: 1rem !important;
             width: 100% !important;
-            margin: 0.3rem 0 !important;
+            margin: 0.5rem 0 !important;
         }}
 
         /* 입력 필드 - iOS 확대 방지 (최소 16px) */
         .stTextArea textarea, .stTextInput input {{
             font-size: 16px !important;
-            min-height: 44px !important;
+            min-height: var(--touch-target-comfortable) !important;
         }}
 
         /* 모드 카드 */
         .mode-card {{
-            padding: 0.8rem;
-            margin: 0.4rem 0;
+            padding: 1.2rem;
+            margin: 0.8rem 0;
         }}
         .mode-card .emoji {{
-            font-size: 2rem;
+            font-size: 2.5rem;
         }}
         .mode-card .title {{
-            font-size: 1rem;
+            font-size: 1.2rem;
         }}
 
         /* 도움말/힌트 박스 */
         .help-box, .hint-box, .warning-box, .success-box {{
-            padding: 0.6rem 0.8rem;
-            margin: 0.5rem 0;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
         }}
 
         /* 현재 섹션 박스 */
         .current-section-box {{
-            padding: 0.5rem 0.8rem;
+            padding: 1rem 1.2rem;
         }}
 
         /* 결과 카드 */
         .result-card {{
-            padding: 0.8rem;
-            margin: 0.5rem 0;
+            padding: 1.2rem;
+            margin: 0.8rem 0;
         }}
 
         /* 채팅 버블 */
         .chat-bubble {{
             max-width: 95%;
-            padding: 0.6rem 0.8rem;
-            font-size: 0.95rem;
+            padding: 1rem 1.2rem;
+            font-size: 1.1rem;
         }}
 
         /* 플로팅 버튼 위치 조정 */
         .floating-help-btn {{
-            bottom: 15px;
-            right: 15px;
-            padding: 8px 14px;
-            font-size: 0.9rem;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            font-size: 1rem;
         }}
 
         /* 컬럼 스택 */
@@ -1613,117 +1057,117 @@ st.markdown(f"""
     /* ============================================ */
     @media (max-width: 480px) {{
         html, body, [class*="st-"] {{
-            font-size: 14px !important;
+            font-size: 16px !important;
         }}
 
         /* 메인 콘텐츠 패딩 최소화 */
         .main .block-container {{
-            padding: 0.3rem !important;
+            padding: 0.5rem !important;
         }}
 
         /* 헤더 */
         .main-header {{
-            font-size: 1.2rem !important;
-            padding: 0.5rem 0.6rem;
-            border-radius: 10px;
+            font-size: 1.5rem !important;
+            padding: 0.6rem 0.8rem;
+            border-radius: 12px;
         }}
         .step-header {{
-            font-size: 1rem !important;
-            padding: 0.4rem 0.6rem;
-            border-radius: 8px;
+            font-size: 1.2rem !important;
+            padding: 0.6rem 0.8rem;
+            border-radius: 12px;
         }}
 
         /* 진행률 */
         .progress-box {{
-            padding: 0.5rem;
-            border-radius: 10px;
+            padding: 1rem;
+            border-radius: 15px;
         }}
         .progress-text {{
-            font-size: 0.95rem !important;
+            font-size: 1.2rem !important;
         }}
         .star-progress {{
-            font-size: 1.1rem;
-            letter-spacing: 2px;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
         }}
 
         /* 버튼 */
         .stButton > button {{
-            font-size: 0.85rem !important;
-            padding: 0.4rem 0.8rem !important;
-            border-radius: 8px !important;
+            font-size: 0.95rem !important;
+            padding: 0.6rem 1rem !important;
+            border-radius: 12px !important;
         }}
         .big-chat-button {{
-            font-size: 1rem !important;
-            min-height: 48px !important;
+            font-size: 1.3rem !important;
+            min-height: 65px !important;
         }}
 
         /* 입력 필드 */
         .stTextArea textarea {{
-            min-height: 80px !important;
+            min-height: 120px !important;
         }}
 
         /* 모드 카드 */
         .mode-card {{
-            padding: 0.6rem;
-            border-radius: 10px;
+            padding: 1rem;
+            border-radius: 15px;
         }}
         .mode-card .emoji {{
-            font-size: 1.6rem;
+            font-size: 2rem;
         }}
         .mode-card .title {{
-            font-size: 0.95rem;
+            font-size: 1.1rem;
         }}
         .mode-card .desc {{
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }}
 
         /* 채팅 모드 */
         .chat-mode-header {{
-            font-size: 1.1rem;
-            padding: 0.6rem;
+            font-size: 1.5rem;
+            padding: 1rem;
         }}
         .chat-progress {{
-            font-size: 0.9rem;
-            padding: 0.5rem;
+            font-size: 1.1rem;
+            padding: 0.8rem;
         }}
         .chat-bubble {{
-            padding: 0.5rem 0.7rem;
-            font-size: 0.9rem;
-            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border-radius: 18px;
         }}
 
         /* 타임라인 */
         .timeline-container {{
-            padding-left: 15px;
+            padding-left: 20px;
         }}
         .timeline-item {{
-            padding-left: 15px;
+            padding-left: 20px;
         }}
 
         /* 배지 */
         .badge {{
-            padding: 0.3rem 0.6rem;
-            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
         }}
 
         /* 빠른 배지 */
         .quick-badge {{
-            font-size: 0.65rem;
-            padding: 2px 6px;
+            font-size: 0.75rem;
+            padding: 3px 8px;
         }}
 
         /* 플로팅 버튼 - safe-area 적용 */
         .floating-help-btn {{
-            bottom: calc(10px + var(--safe-area-inset-bottom));
-            right: calc(10px + var(--safe-area-inset-right));
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            border-radius: 30px;
+            bottom: calc(15px + var(--safe-area-inset-bottom));
+            right: calc(15px + var(--safe-area-inset-right));
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            border-radius: 40px;
         }}
 
         /* 입력 컨테이너 - 키보드/safe-area 대응 */
         .chat-input-container {{
-            padding-bottom: calc(0.5rem + var(--safe-area-inset-bottom));
+            padding-bottom: calc(1rem + var(--safe-area-inset-bottom));
         }}
     }}
 
@@ -1834,45 +1278,45 @@ st.markdown(f"""
     }}
 
     /* ============================================ */
-    /* 채팅 모드 전용 스타일 (컴팩트)               */
+    /* 채팅 모드 전용 스타일 (초등학생용 - 개선판)   */
     /* ============================================ */
     .chat-mode-container {{
         max-width: 800px;
         margin: 0 auto;
-        padding: 0.5rem;
+        padding: 1rem;
     }}
     .chat-mode-header {{
         text-align: center;
-        padding: 0.8rem 1rem;
+        padding: 1.5rem 2rem;
         background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 50%, #4ECDC4 100%);
         color: white;
-        border-radius: 15px;
-        margin-bottom: 0.8rem;
-        font-size: 1.3rem;
+        border-radius: 25px;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
     }}
     .chat-progress {{
         background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
-        padding: 0.6rem 0.8rem;
-        border-radius: 12px;
-        margin-bottom: 0.8rem;
+        padding: 1.2rem 1.5rem;
+        border-radius: 20px;
+        margin-bottom: 1.5rem;
         text-align: center;
-        font-size: 1rem;
+        font-size: 1.4rem;
         font-weight: bold;
         color: #2E7D32;
-        border: 2px solid #81C784;
-        box-shadow: 0 3px 10px rgba(76, 175, 80, 0.2);
+        border: 3px solid #81C784;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
     }}
     .chat-bubble {{
-        padding: 0.8rem 1rem;
-        border-radius: 15px;
-        margin: 0.5rem 0;
-        font-size: 1rem;
-        line-height: 1.5;
+        padding: 1.3rem 1.8rem;
+        border-radius: 25px;
+        margin: 1rem 0;
+        font-size: 1.3rem;
+        line-height: 1.9;
         max-width: 90%;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }}
     .chat-bubble-ai {{
         background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
@@ -1891,108 +1335,96 @@ st.markdown(f"""
         position: sticky;
         bottom: 0;
         background: white;
-        padding: 0.8rem;
-        border-top: 2px solid #E0E0E0;
-        border-radius: 15px 15px 0 0;
-        box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+        padding: 1.5rem;
+        border-top: 3px solid #E0E0E0;
+        border-radius: 25px 25px 0 0;
+        box-shadow: 0 -6px 20px rgba(0,0,0,0.12);
     }}
     .big-chat-button {{
-        font-size: 1.1rem !important;
-        padding: 0.8rem 1.5rem !important;
-        border-radius: 12px !important;
-        min-height: 50px !important;
+        font-size: 1.6rem !important;
+        padding: 1.3rem 2.5rem !important;
+        border-radius: 20px !important;
+        min-height: 75px !important;
         font-weight: bold !important;
     }}
     .restart-button {{
         background: linear-gradient(135deg, #FF5722 0%, #FF7043 100%) !important;
         color: white !important;
-        font-size: 1rem !important;
-        padding: 0.6rem 1.2rem !important;
-        border-radius: 10px !important;
+        font-size: 1.2rem !important;
+        padding: 0.9rem 1.8rem !important;
+        border-radius: 12px !important;
         font-weight: bold !important;
     }}
     .result-card {{
-        background: linear-gradient(135deg, var(--pastel-yellow) 0%, #fefcbf 100%);
-        border: 2px solid var(--accent-gold);
-        border-radius: 12px;
-        padding: 1rem;
-        margin: 0.6rem 0;
-        font-size: 1rem;
-        box-shadow: var(--shadow-md);
-        position: relative;
-    }}
-    .result-card::before {{
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--accent-gold-dark), var(--accent-gold), var(--accent-gold-light));
-        border-radius: 12px 12px 0 0;
+        background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+        border: 4px solid #FFB300;
+        border-radius: 25px;
+        padding: 1.8rem;
+        margin: 1.2rem 0;
+        font-size: 1.25rem;
+        box-shadow: 0 6px 20px rgba(255, 179, 0, 0.25);
     }}
     .result-card h3, .result-card h4 {{
-        color: var(--primary-navy);
-        margin-bottom: 0.5rem;
-        font-weight: 700;
+        color: #E65100;
+        margin-bottom: 1rem;
+        font-weight: bold;
     }}
     .result-card p {{
-        color: var(--text-secondary);
-        margin: 0.3rem 0;
-        line-height: 1.5;
+        color: #5D4037;
+        margin: 0.5rem 0;
     }}
-    /* 예시 버튼 스타일 (컴팩트) */
+    /* 예시 버튼 스타일 */
     div[data-testid="stButton"] button {{
-        font-size: 0.95rem !important;
-        border-radius: 10px !important;
+        font-size: 1.1rem !important;
+        border-radius: 12px !important;
         transition: all 0.2s ease !important;
     }}
     div[data-testid="stButton"] button:hover {{
-        transform: scale(1.02) !important;
+        transform: scale(1.03) !important;
     }}
 
     /* ============================================ */
-    /* 음성 모드 전용 스타일 (컴팩트)                */
+    /* 음성 모드 전용 스타일                         */
     /* ============================================ */
     .voice-mode-container {{
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 15px;
-        padding: 1rem;
-        margin: 0.8rem 0;
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 1.5rem 0;
         color: white;
-        box-shadow: 0 6px 25px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
     }}
     .voice-mode-header {{
-        font-size: 1.4rem;
+        font-size: 2rem;
         font-weight: bold;
         text-align: center;
-        margin-bottom: 0.6rem;
+        margin-bottom: 1rem;
     }}
     .voice-mode-description {{
         text-align: center;
         opacity: 0.9;
-        font-size: 0.95rem;
-        margin-bottom: 0.8rem;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
     }}
     .voice-mic-button {{
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 80px;
-        height: 80px;
-        margin: 0.8rem auto;
+        width: 120px;
+        height: 120px;
+        margin: 1.5rem auto;
         background: white;
         border-radius: 50%;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }}
     .voice-mic-button:hover {{
         transform: scale(1.1);
         box-shadow: 0 6px 30px rgba(0,0,0,0.3);
     }}
     .voice-mic-icon {{
-        font-size: 2rem;
+        font-size: 3rem;
     }}
     .recording-indicator {{
         display: inline-flex;
@@ -2000,10 +1432,9 @@ st.markdown(f"""
         justify-content: center;
         background: #ff4444;
         color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
+        padding: 0.8rem 1.5rem;
+        border-radius: 30px;
         font-weight: bold;
-        font-size: 0.9rem;
         animation: pulse-recording 1.5s infinite;
     }}
     @keyframes pulse-recording {{
@@ -2012,23 +1443,23 @@ st.markdown(f"""
     }}
     .voice-transcription-box {{
         background: white;
-        border-radius: 12px;
-        padding: 0.8rem;
-        margin: 0.8rem 0;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
         color: #333;
-        border: 2px solid #667eea;
-        min-height: 100px;
+        border: 3px solid #667eea;
+        min-height: 150px;
     }}
     .voice-transcription-preview {{
-        font-size: 1rem;
-        line-height: 1.5;
+        font-size: 1.2rem;
+        line-height: 1.8;
         color: #333;
     }}
     .voice-action-button {{
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         color: white !important;
-        font-size: 1rem !important;
-        padding: 0.6rem 1.2rem !important;
+        font-size: 1.3rem !important;
+        padding: 1rem 2rem !important;
         border-radius: 12px !important;
         font-weight: bold !important;
         margin: 0.5rem 0 !important;
@@ -2050,28 +1481,26 @@ st.markdown(f"""
         border-left: 4px solid #667eea;
     }}
 
-    /* 플로팅 도움 챗봇 버튼 - 전문적 */
+    /* 플로팅 도움 챗봇 버튼 */
     .floating-help-btn {{
         position: fixed;
         bottom: 30px;
         right: 30px;
         z-index: 1000;
-        background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-navy-light) 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border: none;
         border-radius: 50px;
         padding: 15px 25px;
         font-size: 1.1rem;
-        font-weight: 700;
+        font-weight: bold;
         cursor: pointer;
-        box-shadow: var(--shadow-navy);
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
         transition: all 0.3s ease;
-        border-bottom: 3px solid var(--accent-gold);
     }}
     .floating-help-btn:hover {{
         transform: translateY(-3px);
-        box-shadow: 0 8px 30px rgba(30, 58, 95, 0.4);
-        background: linear-gradient(135deg, var(--primary-navy-light) 0%, var(--primary-navy) 100%);
+        box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
     }}
 
     /* 연락하기 박스 */
@@ -2111,219 +1540,6 @@ st.markdown(f"""
     .faq-button:hover {{
         background: #667eea;
         color: white;
-    }}
-
-    /* ============================================ */
-    /* 모달 팝업 스타일 (도움말/연락하기용)          */
-    /* ============================================ */
-    .modal-overlay {{
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 9998;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        backdrop-filter: blur(4px);
-    }}
-
-    .modal-container {{
-        background: white;
-        border-radius: 20px;
-        max-width: 600px;
-        width: 100%;
-        max-height: 80vh;
-        overflow-y: auto;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        animation: modal-slide-up 0.3s ease-out;
-        position: relative;
-    }}
-
-    @keyframes modal-slide-up {{
-        from {{
-            opacity: 0;
-            transform: translateY(30px);
-        }}
-        to {{
-            opacity: 1;
-            transform: translateY(0);
-        }}
-    }}
-
-    .modal-header {{
-        background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-navy-light) 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 20px 20px 0 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }}
-
-    .modal-header h3 {{
-        margin: 0;
-        font-size: 1.3rem;
-        font-weight: 700;
-    }}
-
-    .modal-close-btn {{
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        color: white;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        font-size: 1.5rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
-    }}
-
-    .modal-close-btn:hover {{
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(1.1);
-    }}
-
-    .modal-body {{
-        padding: 1.5rem;
-    }}
-
-    /* 도움 버튼 강화 스타일 */
-    .help-contact-buttons {{
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 16px;
-        padding: 1.2rem;
-        margin: 1rem 0;
-        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
-    }}
-
-    .help-contact-buttons h4 {{
-        color: white;
-        margin: 0 0 1rem 0;
-        font-size: 1.1rem;
-        text-align: center;
-    }}
-
-    .help-btn-row {{
-        display: flex;
-        gap: 0.8rem;
-    }}
-
-    .help-action-btn {{
-        flex: 1;
-        padding: 1rem;
-        border-radius: 12px;
-        border: none;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-    }}
-
-    .help-action-btn.chatbot {{
-        background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-        color: white;
-    }}
-
-    .help-action-btn.contact {{
-        background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
-        color: white;
-    }}
-
-    .help-action-btn:hover {{
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }}
-
-    .help-action-btn .btn-icon {{
-        font-size: 1.5rem;
-    }}
-
-    .help-action-btn .btn-text {{
-        font-size: 0.9rem;
-    }}
-
-    /* 연락처 방법 표시 스타일 */
-    .contact-method-info {{
-        background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
-        border-radius: 12px;
-        padding: 1rem;
-        margin: 0.8rem 0;
-        border-left: 4px solid #FF9800;
-    }}
-
-    .contact-method-info p {{
-        margin: 0.3rem 0;
-        font-size: 0.95rem;
-        color: #333;
-    }}
-
-    .contact-method-info .method-title {{
-        font-weight: 700;
-        color: #E65100;
-        margin-bottom: 0.5rem;
-    }}
-
-    /* 메시지 전송 성공 팝업 스타일 */
-    .success-popup {{
-        background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
-        border: 2px solid #4CAF50;
-        border-radius: 16px;
-        padding: 1.5rem;
-        text-align: center;
-        margin: 1rem 0;
-    }}
-
-    .success-popup h4 {{
-        color: #2E7D32;
-        margin: 0 0 0.8rem 0;
-    }}
-
-    .success-popup p {{
-        color: #333;
-        margin: 0.3rem 0;
-    }}
-
-    /* 답변 받을 방법 선택 스타일 */
-    .reply-method-select {{
-        background: #F5F5F5;
-        border-radius: 12px;
-        padding: 1rem;
-        margin-top: 1rem;
-    }}
-
-    .reply-method-select label {{
-        display: block;
-        padding: 0.8rem;
-        margin: 0.5rem 0;
-        background: white;
-        border-radius: 8px;
-        cursor: pointer;
-        border: 2px solid transparent;
-        transition: all 0.2s ease;
-    }}
-
-    .reply-method-select label:hover {{
-        border-color: #667eea;
-        background: #F0F4FF;
-    }}
-
-    .reply-method-select input[type="radio"]:checked + span {{
-        color: #667eea;
-        font-weight: 600;
     }}
 """ + ACHIEVEMENT_CSS + """
 </style>
@@ -2655,49 +1871,44 @@ def navigate_to_step(step_num):
 
 
 def render_sidebar():
-    """사이드바 네비게이션 - 전문적 디자인"""
+    """사이드바 네비게이션"""
     with st.sidebar:
-        # 브랜드 헤더
-        st.markdown("""
-        <div style="text-align: center; padding: 1rem 0.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); border-radius: 12px; border-bottom: 3px solid #c9a962;">
-            <div style="font-size: 1.5rem; color: white; font-weight: 700;">📚 작가의집</div>
-            <div style="font-size: 0.85rem; color: #c9a962; margin-top: 0.3rem;">AI 책쓰기 코칭</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("## 📚 책쓰기 코칭")
+        st.markdown("---")
 
-        # 채팅 모드 버튼 (상단에 눈에 띄게 배치)
+        # 채팅 모드 버튼 (상단에 눈에 띄게 배치 - 초등학생용)
         if st.session_state.chat_mode_active:
-            if st.button("일반 모드로 돌아가기", use_container_width=True, type="secondary"):
+            if st.button("🔙 일반 모드로 돌아가기", use_container_width=True, type="secondary"):
                 st.session_state.chat_mode_active = False
                 st.rerun()
             st.markdown("""
-            <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); color: white; padding: 12px; border-radius: 10px; margin: 10px 0; text-align: center; font-weight: 600; border-left: 4px solid #c9a962;">
-                코칭 대화 진행 중
+            <div style="background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 50%, #4ECDC4 100%); color: white; padding: 15px; border-radius: 15px; margin: 10px 0; text-align: center; font-weight: bold;">
+                📱 북코치와 대화 중! 🎉
             </div>
             """, unsafe_allow_html=True)
         else:
-            if st.button("대화형 코칭 시작", use_container_width=True, type="primary"):
+            if st.button("📱 쉬운 모드로 시작!", use_container_width=True, type="primary"):
                 st.session_state.chat_mode_active = True
                 st.session_state.chat_mode_step = 0
                 st.session_state.chat_mode_history = []
                 st.session_state.chat_mode_data = {}
                 st.rerun()
-            st.caption("1:1 코칭처럼 대화로 책 만들기")
+            st.caption("💡 초등학생도 쉽게! 대화로 책 만들기")
 
         st.markdown("---")
 
         # 유튜브 모드 버튼
         if st.session_state.get("youtube_mode_active", False):
-            if st.button("일반 모드로 돌아가기", key="yt_exit", use_container_width=True, type="secondary"):
+            if st.button("🔙 일반 모드로 돌아가기", key="yt_exit", use_container_width=True, type="secondary"):
                 st.session_state.youtube_mode_active = False
                 st.rerun()
             st.markdown("""
-            <div style="background: linear-gradient(135deg, #c05621 0%, #dd6b20 100%); color: white; padding: 12px; border-radius: 10px; margin: 10px 0; text-align: center; font-weight: 600;">
-                유튜브 변환 모드
+            <div style="background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%); color: white; padding: 12px; border-radius: 10px; margin: 10px 0; text-align: center;">
+                🎬 <b>유튜브 모드 실행 중!</b>
             </div>
             """, unsafe_allow_html=True)
         else:
-            if st.button("유튜브 영상 변환", use_container_width=True, type="secondary"):
+            if st.button("🎬 유튜브 모드", use_container_width=True, type="secondary"):
                 st.session_state.youtube_mode_active = True
                 st.session_state.youtube_step = 1
                 st.session_state.youtube_urls = []
@@ -2706,22 +1917,22 @@ def render_sidebar():
                 st.session_state.youtube_merged_transcript = ""
                 st.session_state.youtube_analysis = ""
                 st.rerun()
-            st.caption("유튜브 영상을 책으로 변환")
+            st.caption("🎥 유튜브 영상을 책으로 변환!")
 
         st.markdown("---")
 
-        # 시각적 타임라인 (전문적 용어)
+        # 시각적 타임라인 (초등학생 친화적 용어)
         steps = [
-            ("1", "기본 정보", "책 콘셉트 정의"),
-            ("2", "제목 생성", "AI 제목 추천"),
-            ("3", "목차 구성", "5부 40장 구조"),
-            ("4", "원고 작성", "챕터별 집필"),
-            ("5", "출간기획서", "출판사 제출용"),
-            ("6", "마케팅 자료", "랜딩페이지"),
-            ("7", "다운로드", "최종 원고"),
+            ("1️⃣", "정보 입력", "기본 정보 입력"),
+            ("2️⃣", "제목 만들기", "AI가 제목 추천"),
+            ("3️⃣", "목차 만들기", "책의 5가지 부분, 40장"),
+            ("4️⃣", "첫 번째 글", "장별 1,500자"),
+            ("5️⃣", "책 소개서", "출판사 제출용"),
+            ("6️⃣", "책 홍보 페이지", "홍보 카피"),
+            ("7️⃣", "다운로드", "최종 원고"),
         ]
 
-        st.markdown("### 코칭 단계")
+        st.markdown("### 📍 진행 단계")
 
         # ARIA 라이브 리전 (스크린리더 지원)
         current_step_name = steps[st.session_state.current_step - 1][1] if st.session_state.current_step <= 7 else "완료"
@@ -2730,48 +1941,35 @@ def render_sidebar():
         for i, (icon, name, desc) in enumerate(steps, 1):
             if i == st.session_state.current_step:
                 st.markdown(f"""
-                <div style="background: linear-gradient(90deg, #ebf8ff 0%, rgba(235, 248, 255, 0.3) 100%); padding:10px 14px; border-radius:8px; margin:4px 0; border-left:4px solid #c9a962;">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="background:#1e3a5f; color:white; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700;">{icon}</span>
-                        <b style="color:#1e3a5f;">{name}</b>
-                    </div>
-                    <div style="font-size:0.8rem; color:#4a5568; margin-left:32px;">{desc}</div>
+                <div style="background:#E3F2FD; padding:8px 12px; border-radius:8px; margin:4px 0; border-left:4px solid #1565C0;">
+                    <b>➡️ {icon} {name}</b>
+                    <div style="font-size:0.85rem; color:#666;">{desc}</div>
                 </div>
                 """, unsafe_allow_html=True)
             elif i < st.session_state.current_step:
                 st.markdown(f"""
-                <div style="padding:8px 14px; margin:4px 0;">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="background:#22543d; color:white; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.8rem;">&#10003;</span>
-                        <span style="color:#22543d; font-weight:500;">{name}</span>
-                    </div>
+                <div style="padding:6px 12px; margin:4px 0; color:#2E7D32;">
+                    ✅ <s style="text-decoration:none;">{name}</s> <span style="color:#888;">완료</span>
                 </div>
                 """, unsafe_allow_html=True)
             else:
                 st.markdown(f"""
-                <div style="padding:8px 14px; margin:4px 0;">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="background:#e2e8f0; color:#718096; width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:600;">{icon}</span>
-                        <span style="color:#718096;">{name}</span>
-                    </div>
+                <div style="padding:6px 12px; margin:4px 0; color:#9E9E9E;">
+                    ⬜ {name}
                 </div>
                 """, unsafe_allow_html=True)
 
         st.markdown("---")
 
-        # 진행률 미니 표시
+        # 진행률 미니 표시 (별 이모지)
         if st.session_state.parsed_toc:
             stats = get_progress_stats()
-            st.markdown("### 집필 현황")
-            # 프로그레스 바 스타일
-            progress_color = "#c9a962" if stats['progress_percent'] < 100 else "#22543d"
-            st.markdown(f"""
-            <div style="margin-bottom: 0.5rem;">
-                <span style="font-weight: 600; color: #1e3a5f;">{stats['completed_sections']}/{stats['total_sections']}</span>
-                <span style="color: #718096;"> 장 완료</span>
-            </div>
-            """, unsafe_allow_html=True)
-            st.markdown(f"**{stats['total_chars']:,}**자 / 60,000자")
+            st.markdown(f"### 📊 진행 현황")
+            # 별 이모지로 진행률 표시
+            star_count = int(stats['progress_percent'] / 20)  # 5단계
+            stars = "⭐" * star_count + "☆" * (5 - star_count)
+            st.markdown(f"**{stats['completed_sections']}/{stats['total_sections']}** 장 {stars}")
+            st.markdown(f"**{stats['total_chars']:,}**자 작성")
             st.progress(stats['progress_percent'] / 100)
 
             # 예상 남은 시간
@@ -2848,49 +2046,27 @@ def render_sidebar():
 
         st.markdown("---")
 
-        # 도움 & 연락 섹션 - 개선된 UI
-        st.markdown("""
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    border-radius: 16px; padding: 1rem; margin: 0.5rem 0;
-                    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
-            <h4 style="color: white; margin: 0 0 0.8rem 0; text-align: center; font-size: 1rem;">
-                도움이 필요하신가요?
-            </h4>
-        </div>
-        """, unsafe_allow_html=True)
+        # 도움 & 연락 섹션
+        st.markdown("### 🆘 도움이 필요하면")
 
         col_help1, col_help2 = st.columns(2)
         with col_help1:
-            help_is_open = st.session_state.get("show_help_chatbot", False)
-            help_btn_label = "닫기" if help_is_open else "AI 도움"
-            help_btn_type = "secondary" if help_is_open else "primary"
-            if st.button(help_btn_label, use_container_width=True, help="화면 중앙에 도움말 팝업이 열립니다", type=help_btn_type, key="sidebar_help_btn"):
-                st.session_state.show_help_chatbot = not help_is_open
+            help_btn_label = "❌ 챗봇 닫기" if st.session_state.get("show_help_chatbot", False) else "💬 도움 챗봇"
+            if st.button(help_btn_label, use_container_width=True, help="AI 도우미와 대화"):
+                st.session_state.show_help_chatbot = not st.session_state.get("show_help_chatbot", False)
                 st.rerun()
 
         with col_help2:
-            contact_is_open = st.session_state.get("show_contact_section", False)
-            contact_btn_label = "닫기" if contact_is_open else "선생님 연락"
-            contact_btn_type = "secondary" if contact_is_open else "primary"
-            if st.button(contact_btn_label, use_container_width=True, help="화면 중앙에 연락하기 팝업이 열립니다", type=contact_btn_type, key="sidebar_contact_btn"):
-                st.session_state.show_contact_section = not contact_is_open
+            contact_btn_label = "❌ 연락 닫기" if st.session_state.get("show_contact_section", False) else "📞 선생님"
+            if st.button(contact_btn_label, use_container_width=True, help="선생님께 질문하기"):
+                st.session_state.show_contact_section = not st.session_state.get("show_contact_section", False)
                 st.rerun()
-
-        # 설명 텍스트
-        st.caption("버튼 클릭 시 화면 중앙에 팝업으로 표시됩니다")
 
         # 답변 대기 중인 질문이 있으면 알림
         try:
             pending_count = get_pending_messages_count()
             if pending_count > 0:
-                st.markdown(f"""
-                <div style="background: #FFF3E0; border-radius: 10px; padding: 0.8rem;
-                            margin-top: 0.5rem; border-left: 4px solid #FF9800;">
-                    <p style="margin: 0; font-size: 0.9rem; color: #E65100;">
-                        <strong>내 질문 {pending_count}개</strong>가 답변을 기다리고 있어요!
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
+                st.info(f"📬 내 질문 {pending_count}개가 답변을 기다리고 있어요!")
         except:
             pass
 
@@ -2946,14 +2122,12 @@ def render_welcome():
     if "welcome_stage" not in st.session_state:
         st.session_state.welcome_stage = "user_type"  # user_type, mode_select, onboarding
 
-    # === 환영 헤더 (앱 이름과 로고) - 전문적 브랜딩 ===
+    # === 환영 헤더 (앱 이름과 로고) ===
     st.markdown("""
     <div class="welcome-header">
-        <div class="brand-badge">AI Book Coaching</div>
-        <div class="logo">📚</div>
+        <div class="logo">🏠✨</div>
         <div class="app-name">작가의집</div>
-        <div class="app-subtitle">책쓰기 코칭 전문</div>
-        <div class="tagline">당신 안의 이야기를 세상 밖으로<br>10년 경력 출판 코치의 노하우와 AI가 함께합니다</div>
+        <div class="tagline">당신 안의 이야기를 세상 밖으로, AI 코칭으로 완성하는 나만의 책</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -3134,8 +2308,8 @@ def render_welcome():
         st.markdown("---")
         st.markdown("""
         <div style="text-align: center; margin: 1.5rem 0;">
-            <h2 style="color: var(--primary-navy, #1e3a5f); font-size: 1.8rem; font-weight: 700;">코칭 방식을 선택하세요</h2>
-            <p style="color: var(--text-secondary, #4a5568); font-size: 1.1rem;">어떤 방식을 선택하든 동일한 품질의 결과물을 얻을 수 있습니다.</p>
+            <h2 style="color: #333; font-size: 1.8rem;">어떤 방식이 편하신가요?</h2>
+            <p style="color: #666; font-size: 1.1rem;">가장 자연스러운 방법으로 시작하세요. 결과물은 동일합니다.</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -3210,8 +2384,8 @@ def render_welcome():
             st.info("👇 아래에서 장르를 선택하면 예시가 자동으로 채워져!")
 
         # 빠른 시작 옵션 (급한 사용자용)
-        st.markdown("### 빠른 시작 템플릿")
-        st.markdown("장르별 템플릿을 선택하면 예시 데이터가 자동으로 채워집니다.")
+        st.markdown("### ⚡ 빠른 시작")
+        st.markdown("시간이 없어? 장르를 선택하면 **예시 데이터**로 바로 시작할 수 있어!")
 
         cols = st.columns(len(GENRE_PRESETS))
         for idx, (genre, preset) in enumerate(GENRE_PRESETS.items()):
@@ -3321,13 +2495,7 @@ def render_step1():
         render_welcome()
         st.markdown("---")
 
-    # UX 개선: 현재 위치 브레드크럼 표시
-    render_ux_breadcrumb(1)
-
     st.markdown('<h2 class="step-header" id="step-1-header" tabindex="-1">1단계: 책의 방향 설정</h2>', unsafe_allow_html=True)
-
-    # UX 개선: 단계별 팁 표시
-    render_ux_step_tip(1)
 
     st.markdown("""
     <div class="help-box" role="note" aria-label="도움말">
@@ -3347,50 +2515,30 @@ def render_step1():
     """, unsafe_allow_html=True)
 
     # 개선점 1: 입력 템플릿/예시 제공 (초보자 지원)
-    with st.expander("📋 베스트셀러 작가들의 예시 참고하기", expanded=False):
+    with st.expander("📋 뭘 써야 할지 모르겠다면? (예시 보기)", expanded=False):
         st.markdown("""
         <div class="hint-box">
-        <b>예시 1: 자기계발 (베스트셀러 유형)</b><br>
-        「부의 추월차선」, 「돈의 속성」 스타일
-        <ul style="margin: 0.5rem 0;">
-        <li><b>저자:</b> 김재무 (10년차 자산운용사 애널리스트)</li>
-        <li><b>책 주제:</b> 월급쟁이가 10년 안에 경제적 자유를 얻는 현실적 로드맵</li>
-        <li><b>타겟 독자:</b> 30-45세 직장인, 연봉 5천만원 이상, 재테크를 시작하고 싶지만 방법을 모르는 사람</li>
-        <li><b>핵심 메시지:</b> 월급의 30%만 10년간 올바르게 투자하면 누구나 10억을 모을 수 있다</li>
-        </ul>
+        **예시 1: 부동산 투자**
+        - 이름: 김재무
+        - 책 주제: 직장인을 위한 부동산 투자 완벽 가이드
+        - 누가 읽을까?: 30-40대 회사원, 재테크 초보자
+        - 가장 중요한 이야기: 월급만으로도 10년 안에 경제적 자유를 얻을 수 있다
         </div>
 
         <div class="hint-box">
-        <b>예시 2: 실용서 (문제 해결형)</b><br>
-        「아침형 인간」, 「하버드 새벽 4시 반」 스타일
-        <ul style="margin: 0.5rem 0;">
-        <li><b>저자:</b> 박미라 (워킹맘 10년차, 시간관리 코치)</li>
-        <li><b>책 주제:</b> 퇴근 후 2시간으로 인생을 바꾸는 워킹맘 시간 혁명</li>
-        <li><b>타겟 독자:</b> 30-40대 워킹맘, 육아와 일의 균형을 찾고 싶은 여성, 자기계발 시간이 부족하다고 느끼는 직장인</li>
-        <li><b>핵심 메시지:</b> 하루 2시간 루틴만 바꾸면 1년 후 완전히 다른 삶을 살 수 있다</li>
-        </ul>
+        **예시 2: 시간 관리**
+        - 이름: 박시간
+        - 책 주제: 워킹맘의 스마트한 시간 관리 비법
+        - 누가 읽을까?: 20-40대 워킹맘, 일과 육아의 균형을 원하는 사람
+        - 가장 중요한 이야기: 하루 2시간의 진정한 집중으로 인생의 질이 달라진다
         </div>
 
         <div class="hint-box">
-        <b>예시 3: 비즈니스/트렌드 (시의성 있는 주제)</b><br>
-        「챗GPT 업무 혁명」, 「AI 시대 생존법」 스타일
-        <ul style="margin: 0.5rem 0;">
-        <li><b>저자:</b> 이정훈 (IT기업 팀장, AI 도입 프로젝트 리더)</li>
-        <li><b>책 주제:</b> AI를 내 편으로 만드는 직장인 생존 전략 50</li>
-        <li><b>타겟 독자:</b> 25-50대 사무직 직장인, AI에 대체될까 불안한 사람, 업무 효율화에 관심 있는 팀장급</li>
-        <li><b>핵심 메시지:</b> AI는 당신의 경쟁자가 아니라 24시간 일하는 비서다</li>
-        </ul>
-        </div>
-
-        <div class="hint-box">
-        <b>예시 4: 에세이/자기 이야기</b><br>
-        「나는 나로 살기로 했다」, 「죽고 싶지만 떡볶이는 먹고 싶어」 스타일
-        <ul style="margin: 0.5rem 0;">
-        <li><b>저자:</b> 최은영 (10년차 직장인, 번아웃 극복 경험자)</li>
-        <li><b>책 주제:</b> 서른다섯, 회사를 그만두고 나를 다시 만났다</li>
-        <li><b>타겟 독자:</b> 30-40대 직장인, 번아웃을 경험했거나 현재 겪고 있는 사람, 퇴사를 고민하는 사람</li>
-        <li><b>핵심 메시지:</b> 멈춤은 끝이 아니라 진짜 나를 찾는 시작이다</li>
-        </ul>
+        **예시 3: AI 활용**
+        - 이름: 이인공
+        - 책 주제: 직장인을 위한 ChatGPT 완벽 활용법
+        - 누가 읽을까?: 20-50대 직장인, 업무 효율화에 관심 있는 사람
+        - 가장 중요한 이야기: AI를 올바로 다루면 업무 생산성이 3배 높아진다
         </div>
         """, unsafe_allow_html=True)
 
@@ -3399,47 +2547,47 @@ def render_step1():
 
         with col1:
             name = st.text_input(
-                "저자명 *",
+                "📝 이름 (꼭 써줘!)",
                 value=st.session_state.book_info.get("name", ""),
-                placeholder="책 표지에 표시될 이름 (예: 홍길동, 필명 가능)",
-                help="책 표지, 출간기획서, 저자 소개에 사용됩니다. 본명 또는 필명을 입력하세요."
+                placeholder="홍길동",
+                help="💡 책 표지에 나오는 이름이야!"
             )
             topic = st.text_area(
-                "책 주제 *",
+                "📚 책 주제 (꼭 써줘!)",
                 value=st.session_state.book_info.get("topic", ""),
-                placeholder="어떤 내용의 책을 쓰고 싶으신가요?\n\n예시:\n- 퇴직 후 제2의 인생을 시작하는 50대를 위한 창업 가이드\n- 육아와 커리어를 동시에 잡는 워킹맘 생존 전략\n- 주식 초보가 1년 만에 수익률 30% 달성한 실전 노하우",
-                height=120,
-                help="구체적일수록 좋습니다. 제목 생성과 목차 구성에 핵심 자료로 활용됩니다."
+                placeholder="예: 직장인을 위한 부동산 투자\n예: 워킹맘의 시간 관리 비법\n예: AI를 활용한 업무 자동화",
+                height=100,
+                help="💡 무슨 책을 쓰고 싶어? 간단히 적어봐!"
             )
             target_reader = st.text_area(
-                "타겟 독자 *",
+                "👥 누가 읽을까? (꼭 써줘!)",
                 value=st.session_state.book_info.get("target_reader", ""),
-                placeholder="이 책을 읽어야 하는 사람은 누구인가요?\n\n예시:\n- 30-40대 직장인 중 재테크를 시작하고 싶은 사람\n- 자녀 교육에 고민이 많은 초등학생 학부모\n- 이직을 준비하는 5년차 이상 개발자",
-                height=120,
-                help="나이, 직업, 상황, 고민을 구체적으로 적어주세요. 글의 난이도와 톤이 결정됩니다."
+                placeholder="예: 30-40대 직장인\n예: 재테크에 관심 있는 초보자\n예: 부업을 찾는 주부",
+                height=100,
+                help="💡 이 책을 읽을 사람이 누구야? 나이, 직업, 관심사를 적어봐!"
             )
 
         with col2:
             core_message = st.text_area(
-                "핵심 메시지 * (책을 한 줄로 요약하면?)",
+                "💎 가장 중요한 이야기 (꼭 써줘!)",
                 value=st.session_state.book_info.get("core_message", ""),
-                placeholder="독자가 이 책을 읽고 얻어갈 핵심 가치는?\n\n예시:\n- 누구나 3년이면 경제적 자유를 시작할 수 있다\n- 하루 30분 루틴이 인생을 바꾼다\n- AI를 두려워하지 말고 활용하라",
-                height=120,
-                help="책 전체를 관통하는 한 줄 메시지입니다. 독자가 기억할 핵심 가치를 적어주세요."
+                placeholder="예: 월급쟁이도 10년 안에 경제적 자유를 얻을 수 있다\n예: 하루 30분 투자로 인생이 바뀐다",
+                height=100,
+                help="💡 이 책에서 가장 말하고 싶은 것 한 줄로!"
             )
             experience = st.text_area(
-                "저자 경험/전문성 (선택)",
+                "🌟 내 경험 (안 써도 돼!)",
                 value=st.session_state.book_info.get("experience", ""),
-                placeholder="이 주제에 대해 쓸 수 있는 자격은?\n\n예시:\n- 10년간 부동산 투자로 자산 10억 달성\n- 500명 이상의 학생을 가르친 영어 강사\n- 3개 스타트업 창업 및 매각 경험",
-                height=120,
-                help="없어도 괜찮습니다. 있다면 출간기획서에서 신뢰도를 높이는 데 활용됩니다."
+                placeholder="예: 월급 300만원에서 시작해 10년간 투자로 자산 10억 달성",
+                height=100,
+                help="💡 네가 직접 경험한 이야기가 있으면 적어봐! 없어도 괜찮아!"
             )
             tone = st.selectbox(
-                "글쓰기 톤",
+                "🎨 글의 느낌",
                 options=WRITING_TONES,
                 index=WRITING_TONES.index(st.session_state.book_info.get("tone", WRITING_TONES[0]))
                 if st.session_state.book_info.get("tone") in WRITING_TONES else 0,
-                help="책의 전체적인 분위기를 결정합니다. 타겟 독자에게 맞는 톤을 선택하세요."
+                help="💡 글이 어떤 느낌이었으면 좋겠어? 예: 친절한, 전문가 같은"
             )
 
         submitted = st.form_submit_button(
@@ -3480,44 +2628,15 @@ def render_step1():
 
 def render_step2():
     """2단계: 제목 생성"""
-    # UX 개선: 현재 위치 브레드크럼 표시
-    render_ux_breadcrumb(2)
-
-    st.markdown('<h2 class="step-header" id="step-2-header" tabindex="-1">2단계: 책 제목 결정</h2>', unsafe_allow_html=True)
-
-    # UX 개선: 단계별 팁 표시
-    render_ux_step_tip(2)
+    st.markdown('<h2 class="step-header" id="step-2-header" tabindex="-1">2단계: 제목 생성</h2>', unsafe_allow_html=True)
 
     st.markdown("""
     <div class="help-box">
-    <b>코치의 조언</b>
+    💡 <b>팁:</b> AI가 10가지 제목을 제안합니다. 마음에 드는 것을 선택하거나 수정하세요.
     <br><br>
-    제목은 책의 운명을 결정합니다. 서점에서 독자가 책을 집어드는 첫 번째 이유가 바로 제목입니다.
-    <br><br>
-    AI가 베스트셀러 제목 공식 10가지를 적용해 제목을 추천합니다.<br>
-    마음에 드는 것을 선택하거나, 여러 제목의 장점을 조합해 새로운 제목을 만들어보세요.
-    <br><br>
-    <b>좋은 제목의 특징:</b> 호기심 유발, 구체적 숫자, 타겟 명확, 10자 이내 간결함
+    <b>이 제목이 사용되는 곳:</b> 책 표지, 목차, 마케팅 자료, 출간기획서 전체에서 사용됩니다!
     </div>
     """, unsafe_allow_html=True)
-
-    # book_info 유효성 검사
-    book_info = st.session_state.get("book_info", {})
-    required_fields = ["topic", "target_reader", "core_message"]
-    missing_fields = [f for f in required_fields if not book_info.get(f)]
-
-    if missing_fields:
-        field_names = {"topic": "책 주제", "target_reader": "타겟 독자", "core_message": "핵심 메시지"}
-        missing_names = [field_names.get(f, f) for f in missing_fields]
-        st.warning(f"""
-        **아직 입력하지 않은 정보가 있습니다.**
-
-        다음 정보를 1단계에서 먼저 입력해주세요: **{', '.join(missing_names)}**
-        """)
-        if st.button("← 1단계로 돌아가기", type="primary"):
-            st.session_state.current_step = 1
-            st.rerun()
-        return
 
     col1, col2 = st.columns([2, 1])
 
@@ -3525,26 +2644,18 @@ def render_step2():
         # 제목 생성 버튼
         if st.button("🎯 제목 10개 생성하기", use_container_width=True, type="primary"):
             with st.spinner("✨ AI가 제목을 생성하고 있습니다..."):
-                try:
-                    result = generate_titles(st.session_state.book_info)
-                    if result:
-                        st.session_state.generated_titles = result
-                        st.rerun()
-                    else:
-                        st.error("""
-                        **제목 생성에 실패했습니다.**
-
-                        - 인터넷 연결을 확인해주세요.
-                        - 잠시 후 다시 시도해보세요.
-                        """)
-                except Exception as e:
+                result = generate_titles(st.session_state.book_info)
+                if result:
+                    st.session_state.generated_titles = result
+                    st.rerun()
+                else:
                     st.error("""
-                    **제목 생성 중 오류가 발생했습니다.**
+                    **제목 생성에 실패했습니다**
 
-                    잠시 후 다시 시도해주세요.
+                    - 인터넷 연결을 확인해주세요
+                    - 잠시 후 다시 시도해보세요
+                    - 문제가 계속되면 사이드바에서 '진행상황 저장' 후 새로고침
                     """)
-                    with st.expander("기술 정보", expanded=False):
-                        st.code(str(e)[:300])
 
         # 생성된 제목 표시
         if st.session_state.generated_titles:
@@ -3567,25 +2678,17 @@ def render_step2():
                 trigger_important_save("title_selected")
 
     with col2:
-        st.markdown("### 베스트셀러 제목 분석")
+        st.markdown("### 💡 좋은 제목의 조건")
         st.info("""
-        **검증된 제목 공식:**
+        ✅ 10자 이내로 간결하게
+        ✅ 읽을 사람이 공감하는 단어
+        ✅ 호기심을 유발
+        ✅ 구체적인 숫자나 결과 포함
 
-        **숫자형** - 구체적 결과 제시
-        - 「1만 시간의 법칙」
-        - 「하루 5분 기적의 습관」
-
-        **질문형** - 독자 고민 자극
-        - 「왜 나는 항상 돈이 없을까?」
-
-        **변화형** - Before/After 제시
-        - 「월급쟁이에서 건물주로」
-
-        **비밀형** - 희소성 강조
-        - 「부자들만 아는 세금의 비밀」
-
-        **행동형** - 즉시 실행 유도
-        - 「지금 당장 시작하라」
+        **예시:**
+        - 부의 추월차선
+        - 아침형 인간
+        - 1만 시간의 법칙
         """)
 
         if st.session_state.generated_titles:
@@ -3612,30 +2715,14 @@ def render_step2():
 
 def render_step3():
     """3단계: 목차 생성"""
-    # UX 개선: 현재 위치 브레드크럼 표시
-    render_ux_breadcrumb(3)
-
-    st.markdown('<h2 class="step-header" id="step-3-header" tabindex="-1">3단계: 목차 구성</h2>', unsafe_allow_html=True)
-    st.markdown(f"**선택된 제목:** {st.session_state.selected_title}")
-
-    # UX 개선: 단계별 팁 표시
-    render_ux_step_tip(3)
+    st.markdown('<h2 class="step-header" id="step-3-header" tabindex="-1">3단계: 목차 만들기</h2>', unsafe_allow_html=True)
+    st.markdown(f"**📖 책 제목:** {st.session_state.selected_title}")
 
     st.markdown("""
     <div class="help-box">
-    <b>코치의 조언</b>
+    💡 <b>안내:</b> 책의 5가지 부분, 40장 구조로 목차를 만들어! 각 장이 약 1,500자면 총 6만자 책이 돼!
     <br><br>
-    목차는 책의 설계도입니다. 잘 짜인 목차가 있으면 글쓰기가 훨씬 수월해집니다.
-    <br><br>
-    AI가 검증된 <b>5부 40장 구조</b>로 목차를 생성합니다:
-    <ul style="margin: 0.5rem 0;">
-    <li><b>Part 1. WHY</b> - 왜 이 책을 읽어야 하는지 (동기 부여)</li>
-    <li><b>Part 2. WHAT</b> - 무엇을 알아야 하는지 (핵심 개념)</li>
-    <li><b>Part 3. HOW</b> - 어떻게 해야 하는지 (실천 방법)</li>
-    <li><b>Part 4. DO</b> - 실제로 해보기 (사례와 실습)</li>
-    <li><b>Part 5. FUTURE</b> - 앞으로의 여정 (비전과 동기부여)</li>
-    </ul>
-    각 장 1,500자 x 40장 = <b>총 6만자 분량</b>의 책이 완성됩니다.
+    <b>목차의 역할:</b> 다음 단계에서 만들 첫 번째 글의 틀이야! 장 하나씩 AI가 자동으로 1,500자를 써줄 거야!
     </div>
     """, unsafe_allow_html=True)
 
@@ -3817,13 +2904,7 @@ def is_part_completed(part_num, parsed_toc, drafts):
 
 def render_step4():
     """4단계: 첫 번째 글 생성 - 순차적 플로우"""
-    # UX 개선: 현재 위치 브레드크럼 표시
-    render_ux_breadcrumb(4)
-
     st.markdown('<h2 class="step-header" id="step-4-header" tabindex="-1">4단계: 첫 번째 글 쓰기</h2>', unsafe_allow_html=True)
-
-    # UX 개선: 단계별 팁 표시
-    render_ux_step_tip(4)
 
     # 성취 시스템 - 강화된 진행률 헤더
     render_progress_header()
@@ -3906,8 +2987,8 @@ def render_step4():
             if edited_draft != drafts[section_key]:
                 drafts[section_key] = edited_draft
 
-            # UX 개선: 향상된 글자 수 카운터
-            render_ux_char_counter(edited_draft, target_chars=1500)
+            char_count = len(edited_draft.replace(" ", "").replace("\n", ""))
+            st.caption(f"📊 글자 수: {char_count}자")
 
             col_a, col_b = st.columns(2)
             with col_a:
@@ -3951,76 +3032,63 @@ def render_step4():
                     "examples": section_examples if 'section_examples' in dir() else "",
                 }
 
-                # UX 개선: 향상된 로딩 애니메이션
-                loading_placeholder = st.empty()
-                with loading_placeholder.container():
-                    render_ux_loading(30, "글 만들기", show_tips=True)
+                # 생성 진행 상태 표시
+                status_container = st.container()
+                with status_container:
+                    progress_bar = st.progress(0, text="글 만들기 시작...")
+                    status_text = st.empty()
 
-                result = generate_draft(st.session_state.book_info, section_info)
+                with st.spinner("✨ AI가 글을 쓰고 있어... (약 1분)"):
+                    status_text.info("💭 열심히 쓰는 중... 잠깐만 기다려줘!")
+                    progress_bar.progress(50, text="글 쓰는 중...")
 
-                # 로딩 애니메이션 제거
-                loading_placeholder.empty()
+                    result = generate_draft(st.session_state.book_info, section_info)
 
-                if result:
-                    st.session_state.drafts[section_key] = result
+                    if result:
+                        st.session_state.drafts[section_key] = result
+                        progress_bar.progress(100, text="글 완성!")
 
-                    # 초안 완성 시 자동 저장 트리거
-                    trigger_important_save("draft_completed")
+                        # 초안 완성 시 자동 저장 트리거
+                        trigger_important_save("draft_completed")
 
-                    # 성취 시스템 호출 - 장 완료 처리
-                    on_chapter_complete()
+                        # 성취 시스템 호출 - 장 완료 처리
+                        on_chapter_complete()
 
-                    # 마일스톤 성취감 피드백
-                    new_completed = len(st.session_state.drafts)
-                    total = len(parsed_toc)
+                        # 마일스톤 성취감 피드백
+                        new_completed = len(st.session_state.drafts)
+                        total = len(parsed_toc)
 
-                    # 동기부여 메시지 가져오기
-                    motivation = get_motivation_by_progress()
+                        # 동기부여 메시지 가져오기
+                        motivation = get_motivation_by_progress()
 
-                    # UX 개선: 마일스톤별 피드백 메시지 (축하 효과 강화)
-                    if new_completed == total:
-                        st.balloons()
-                        st.snow()
-                        render_ux_celebration(
-                            "모든 첫 번째 글 완성!",
-                            "축하합니다! 이제 책 한 권 분량의 원고가 완성되었어요!",
-                            ["🎆", "👑", "🎉"]
-                        )
-                        # UX 개선: 자동 스크롤
-                        inject_auto_scroll_script("ux-celebration-box")
-                    elif new_completed in [5, 10, 15, 20, 25, 30, 35]:
-                        st.balloons()
-                        milestone = MILESTONE_MESSAGES.get(new_completed, {})
-                        if milestone:
-                            render_ux_celebration(
-                                milestone.get('title', f'{new_completed}장 완료!'),
-                                milestone.get('message', ''),
-                                [milestone.get('emoji', '🎉'), "✨", "🌟"]
-                            )
-                    elif is_part_completed(current_section['part'], parsed_toc, st.session_state.drafts):
-                        st.balloons()
-                        render_ux_celebration(
-                            f"Part {current_section['part']} 완료!",
-                            "한 파트를 모두 완료했어요! 대단해요!",
-                            ["🎉", "📖", "✨"]
-                        )
+                        # 마일스톤별 피드백 메시지 (초등학생 친화적) - 성취 시스템과 연동
+                        if new_completed == total:
+                            st.balloons()
+                            st.snow()
+                            st.success("🎆 축하해! 모든 첫 번째 글이 완성됐어! 👑 책 완성!")
+                        elif new_completed in [5, 10, 15, 20, 25, 30, 35]:
+                            st.balloons()
+                            milestone = MILESTONE_MESSAGES.get(new_completed, {})
+                            if milestone:
+                                st.success(f"{milestone.get('emoji', '🎉')} {milestone.get('title', '')}\n\n{milestone.get('message', '')}")
+                        elif is_part_completed(current_section['part'], parsed_toc, st.session_state.drafts):
+                            st.balloons()
+                            st.success(f"🎉 Part {current_section['part']} 완료!")
+                        else:
+                            st.success(f"✅ 글 완성! ({new_completed}/{total})\n\n{motivation}")
                     else:
-                        # UX 개선: 토스트 스타일 성공 메시지
-                        render_ux_toast(f"글 완성! ({new_completed}/{total})", "success")
-                        st.success(f"✅ 글 완성! ({new_completed}/{total})\n\n{motivation}")
-                else:
-                    # UX 개선: 토스트 스타일 에러 메시지
-                    render_ux_toast("앗! 잠깐 문제가 생겼어요.", "error")
-                    st.session_state['last_failed_section'] = section_key
-                    st.error("""
-                    **앗! 잠깐 문제가 생겼어. 다시 해볼까?**
+                        progress_bar.progress(100, text="실패")
+                        # 친근한 에러 메시지
+                        st.session_state['last_failed_section'] = section_key
+                        st.error("""
+                        **앗! 잠깐 문제가 생겼어. 다시 해볼까?**
 
-                    **이렇게 해봐:**
-                    1. 🔄 잠깐(30초) 기다렸다가 다시 버튼을 눌러봐
-                    2. 인터넷 연결을 확인해봐
+                        **이렇게 해봐:**
+                        1. 🔄 잠깐(30초) 기다렸다가 다시 버튼을 눌러봐
+                        2. 인터넷 연결을 확인해봐
 
-                    💡 **팁:** '직접 쓰기'에 먼저 글을 쓰고, 나중에 AI한테 도움 받을 수도 있어!
-                    """)
+                        💡 **팁:** '직접 쓰기'에 먼저 글을 쓰고, 나중에 AI한테 도움 받을 수도 있어!
+                        """)
 
                 st.rerun()
 
@@ -4147,14 +3215,7 @@ def render_step4():
 
 def render_step5():
     """5단계: 책 소개서"""
-    # UX 개선: 현재 위치 브레드크럼 표시
-    render_ux_breadcrumb(5)
-
     st.markdown('<h2 class="step-header" id="step-5-header" tabindex="-1">5단계: 책 소개서</h2>', unsafe_allow_html=True)
-
-    # UX 개선: 단계별 팁 표시
-    render_ux_step_tip(5)
-
     st.markdown("""
     출판사에 보여줄 책 소개서를 만들어요!
 
@@ -4285,14 +3346,7 @@ def render_step5():
 
 def render_step6():
     """6단계: 책 홍보 페이지"""
-    # UX 개선: 현재 위치 브레드크럼 표시
-    render_ux_breadcrumb(6)
-
     st.markdown('<h2 class="step-header" id="step-6-header" tabindex="-1">6단계: 책 홍보 페이지</h2>', unsafe_allow_html=True)
-
-    # UX 개선: 단계별 팁 표시
-    render_ux_step_tip(6)
-
     st.markdown("책을 홍보할 수 있는 페이지 글을 만들어요!")
 
     col1, col2 = st.columns([2, 1])
@@ -5292,20 +4346,7 @@ def generate_share_link():
 
 def render_step7():
     """7단계: 결과물 다운로드 (책다운 출력) - 강화 버전"""
-    # UX 개선: 현재 위치 브레드크럼 표시
-    render_ux_breadcrumb(7)
-
     st.markdown('<h2 class="step-header" id="step-7-header" tabindex="-1">7단계: 완성! 다운로드</h2>', unsafe_allow_html=True)
-
-    # UX 개선: 단계별 팁 표시
-    render_ux_step_tip(7)
-
-    # UX 개선: 화려한 축하 효과 표시
-    render_ux_celebration(
-        "책이 완성되었습니다!",
-        "축하합니다! 이제 당신도 작가입니다. 아래에서 원고를 다운로드하세요.",
-        ["🎉", "📚", "✨"]
-    )
 
     # 최종 진행률
     render_progress_bar()
@@ -6207,67 +5248,67 @@ def render_youtube_step4_drafts():
 # 📱 채팅 모드 (초등학생용 대화형 책쓰기)
 # ============================================================
 
-# 채팅 모드 단계별 질문 정의 (40~50대 CEO/전문직 대상)
+# 채팅 모드 단계별 질문 정의 (초등학생 친화적으로 개선)
 CHAT_MODE_STEPS = [
     {
         "step": 0,
-        "name": "저자명",
+        "name": "이름",
         "emoji": "1️⃣",
-        "question": "안녕하세요! 저는 책쓰기 전문 코치 '북코치'입니다.\n\n오늘부터 작가님의 책 집필을 도와드리겠습니다.\n\n먼저 저자명(필명)을 알려주시겠어요?",
+        "question": "안녕! 😊 나는 책쓰기 도우미 '북코치'야!\n\n나랑 같이 재미있는 책을 만들어볼래?\n\n먼저, 네 이름이 뭐야? 🙋",
         "key": "name",
-        "placeholder": "저자명을 입력해 주세요 (예: 홍길동, 김작가)",
-        "examples": ["홍길동", "김대표", "이코치", "박박사", "최전문"],
-        "help_text": "본명 또는 필명을 입력해 주세요.",
+        "placeholder": "여기에 네 이름을 써줘! (예: 김민준)",
+        "examples": ["민준", "서연", "지우", "하은", "도윤"],
+        "help_text": "진짜 이름이나 별명 아무거나 괜찮아!",
     },
     {
         "step": 1,
         "name": "책 주제",
         "emoji": "2️⃣",
-        "question": "{name}님, 반갑습니다! 함께 좋은 책을 만들어 가겠습니다.\n\n어떤 주제로 책을 쓰고 싶으신가요?\n\n그동안 쌓아오신 경험, 전문 지식, 또는 전하고 싶은 메시지가 무엇인지 알려주세요.",
+        "question": "{name}아/야, 반가워! 🎉 우리 친구 하자!\n\n자, 이제 어떤 책을 쓸지 정해보자!\n\n네가 제일 좋아하는 게 뭐야? 게임? 동물? 스포츠? 만화? 🌟\n\n뭐든지 책으로 만들 수 있어!",
         "key": "topic",
-        "placeholder": "책 주제를 입력해 주세요 (예: 30년 경영 노하우를 담은 리더십 이야기)",
-        "examples": ["30년 경영 노하우를 담은 리더십 이야기", "의사가 알려주는 건강한 삶의 비결", "변호사의 협상 전략", "투자 전문가의 자산 관리 비법", "창업 10년, 실패와 성공의 기록", "교육자가 전하는 자녀 교육법"],
-        "help_text": "전문 분야, 경험, 노하우 등 어떤 주제든 책으로 만들 수 있습니다.",
+        "placeholder": "네가 좋아하는 것을 써줘! (예: 우리집 고양이)",
+        "examples": ["마인크래프트", "우리집 강아지", "축구 이야기", "공룡 탐험", "요리하기", "우주 여행"],
+        "help_text": "좋아하는 것, 재미있었던 경험, 잘하는 것 뭐든 OK!",
     },
     {
         "step": 2,
-        "name": "타겟 독자",
+        "name": "대상 독자",
         "emoji": "3️⃣",
-        "question": "'{topic}'이라는 주제, 훌륭합니다!\n\n이 책은 어떤 분들이 읽으면 좋을까요?\n\n타겟 독자를 구체적으로 정의하면 더 효과적인 책이 됩니다.",
+        "question": "와~ {topic}! 👏 완전 재미있겠다!\n\n그런데 이 책은 누가 읽으면 좋을까? 🤔\n\n친구들한테 보여줄 거야? 동생한테? 아니면 엄마 아빠한테?",
         "key": "target_reader",
-        "placeholder": "타겟 독자를 입력해 주세요 (예: 중견기업 임원 및 예비 창업가)",
-        "examples": ["중견기업 임원 및 예비 창업가", "40-50대 건강 관리에 관심 있는 직장인", "사업 성장을 고민하는 CEO", "재테크를 시작하려는 전문직 종사자", "자녀 교육에 고민이 있는 학부모"],
-        "help_text": "나이, 직업, 관심사 등을 구체적으로 설정하시면 좋습니다.",
+        "placeholder": "누가 읽으면 좋을지 써줘! (예: 우리반 친구들)",
+        "examples": ["우리반 친구들", "동생", "엄마 아빠", "선생님", "나만 볼 거야"],
+        "help_text": "책을 읽을 사람을 생각하면 더 잘 쓸 수 있어!",
     },
     {
         "step": 3,
         "name": "제목 생성",
         "emoji": "4️⃣",
-        "question": "좋습니다! 이제 준비가 되었습니다.\n\n📚 책 정보 정리:\n• 주제: {topic}\n• 타겟 독자: {target_reader}\n\nAI가 베스트셀러 공식을 적용하여 책 제목 10가지를 추천해 드리겠습니다.\n\n아래 버튼을 클릭해 주세요.",
+        "question": "좋았어! 👍 이제 준비 완료!\n\n📚 책 정보 정리:\n• 주제: {topic}\n• 독자: {target_reader}\n\n이제 AI 친구가 멋진 책 제목을 10개나 만들어줄게!\n\n아래 반짝이는 버튼을 꾹~ 눌러봐! ✨",
         "key": "title",
         "action": "generate_titles",
-        "loading_message": "📝 베스트셀러 제목 공식을 분석하고 있습니다...\n\n약 30초 정도 소요됩니다. 잠시만 기다려 주세요.",
-        "error_message": "죄송합니다. 일시적인 오류가 발생했습니다.\n\n인터넷 연결을 확인하신 후 다시 시도해 주세요.",
+        "loading_message": "🎨 두근두근! 멋진 제목을 생각하고 있어...\n\n책 제목은 정말 중요해! 30초만 기다려줘! ⏳",
+        "error_message": "앗! 제목 만들기가 잘 안됐어 😢\n\n인터넷이 연결되어 있는지 확인해볼까?\n\n다시 한번 버튼을 눌러봐!",
     },
     {
         "step": 4,
         "name": "목차 생성",
         "emoji": "5️⃣",
-        "question": "제목이 결정되었습니다!\n\n「{title}」 훌륭한 선택입니다.\n\n이제 책의 목차를 구성할 차례입니다.\n\n📖 5부 40장 구조로 체계적인 목차를 설계해 드리겠습니다.\n\nWhy-What-How-Do-Future 프레임워크를 적용합니다.",
+        "question": "제목이 정해졌어! 🎯\n\n'{title}'(이)라는 제목 정말 멋지다!\n\n이제 책의 '목차'를 만들 차례야!\n\n📖 목차가 뭐냐고? 책에서 어떤 이야기를 할지 순서를 정하는 거야!\n\n마치 영화의 예고편처럼! 🎬",
         "key": "toc",
         "action": "generate_toc",
-        "loading_message": "📋 체계적인 목차 구조를 설계하고 있습니다.\n\n약 1분 정도 소요됩니다. 잠시만 기다려 주세요.",
-        "error_message": "죄송합니다. 일시적인 오류가 발생했습니다.\n\n다시 시도해 주세요.",
+        "loading_message": "📋 책의 이야기 순서를 짜고 있어!\n\n어떤 내용이 들어가면 좋을지 생각 중이야... 1분만 기다려! ⏳",
+        "error_message": "앗! 목차 만들기가 잘 안됐어 😢\n\n걱정 마! 다시 시도해볼게!\n\n버튼을 한번 더 눌러줘!",
     },
     {
         "step": 5,
-        "name": "첫 번째 챕터",
+        "name": "첫 번째 글 쓰기",
         "emoji": "6️⃣",
-        "question": "목차도 완성되었습니다! 거의 다 왔습니다.\n\n이제 본격적으로 원고를 작성할 시간입니다. ✍️\n\nAI가 첫 번째 챕터 초안을 작성해 드리겠습니다.\n\n작성된 초안을 검토하시고 필요한 부분을 수정해 주세요.",
+        "question": "와~ 목차도 완성! 🎊 거의 다 됐어!\n\n이제 진짜 책 내용을 쓸 시간이야! ✍️\n\n첫 번째 이야기를 AI가 도와줄게!\n\n완성되면 네가 읽어보고 마음에 드는지 확인해봐! 📝",
         "key": "draft",
         "action": "generate_draft",
-        "loading_message": "✍️ 첫 번째 챕터를 작성하고 있습니다.\n\n약 1분 정도 소요됩니다. 잠시만 기다려 주세요.",
-        "error_message": "죄송합니다. 일시적인 오류가 발생했습니다.\n\n다시 시도해 주세요.",
+        "loading_message": "✨ 드디어 첫 번째 이야기를 쓰고 있어!\n\n재미있는 이야기가 될 거야! 1분만 기다려! ⏳",
+        "error_message": "앗! 글쓰기가 잘 안됐어 😢\n\n괜찮아! 다시 해보자!\n\n버튼을 다시 눌러줘!",
     },
 ]
 
@@ -6756,430 +5797,25 @@ def render_chat_mode():
         """, unsafe_allow_html=True)
 
 
-# ============================================
-# UX 개선 헬퍼 함수들
-# ============================================
-
-# 친근한 로딩 메시지 리스트
-UX_LOADING_MESSAGES = [
-    "열심히 쓰는 중이에요... 조금만 기다려줘!",
-    "AI가 열심히 생각하고 있어요...",
-    "멋진 글이 만들어지고 있어요!",
-    "거의 다 됐어요, 조금만!",
-    "창작의 마법이 일어나고 있어요...",
-    "좋은 글이 나올 거예요!",
-    "AI 작가가 집중하고 있어요...",
-]
-
-# 친근한 팁 메시지 리스트
-UX_LOADING_TIPS = [
-    "글을 쓰는 동안 잠깐 스트레칭을 해보세요!",
-    "좋은 책은 천천히 만들어져요.",
-    "완벽하지 않아도 괜찮아요. 나중에 고칠 수 있어요!",
-    "하루에 조금씩 쓰면 어느새 책 한 권이 완성돼요.",
-    "쓰다가 모르는 게 있으면 AI 코치에게 물어보세요!",
-]
-
-
-def render_ux_loading(progress_percent: int = 50, task_name: str = "글 만들기", show_tips: bool = True):
-    """향상된 로딩 애니메이션 표시
-
-    Args:
-        progress_percent: 진행률 (0-100)
-        task_name: 현재 작업 이름
-        show_tips: 팁 표시 여부
-    """
-    import random
-
-    message = random.choice(UX_LOADING_MESSAGES)
-    tip = random.choice(UX_LOADING_TIPS) if show_tips else ""
-
-    loading_html = f"""
-    <div class="ux-loading-container" id="ux-loading-box">
-        <div class="ux-loading-emoji">✨</div>
-        <div class="ux-loading-spinner"></div>
-        <div class="ux-loading-text">{task_name} 중...</div>
-        <div class="ux-loading-subtext">{message}</div>
-        <div class="ux-loading-progress">
-            <div class="ux-loading-progress-bar" style="width: {progress_percent}%;"></div>
-        </div>
-        <div class="ux-loading-percent">{progress_percent}%</div>
-        {"<div class='ux-loading-tips'>" + tip + "</div>" if show_tips and tip else ""}
-    </div>
-    """
-    return st.markdown(loading_html, unsafe_allow_html=True)
-
-
-def render_ux_toast(message: str, toast_type: str = "success", icon: str = None):
-    """토스트 스타일 알림 표시
-
-    Args:
-        message: 표시할 메시지
-        toast_type: 타입 (success, error, info, warning)
-        icon: 아이콘 (기본값은 타입에 따라 자동 선택)
-    """
-    icons = {
-        "success": "✅",
-        "error": "❌",
-        "info": "ℹ️",
-        "warning": "⚠️"
-    }
-    selected_icon = icon or icons.get(toast_type, "✅")
-
-    toast_html = f"""
-    <div class="ux-toast ux-toast-{toast_type}">
-        <span class="ux-toast-icon">{selected_icon}</span>
-        <span class="ux-toast-message">{message}</span>
-    </div>
-    <script>
-        setTimeout(function() {{
-            var toast = document.querySelector('.ux-toast');
-            if (toast) toast.style.display = 'none';
-        }}, 3000);
-    </script>
-    """
-    st.markdown(toast_html, unsafe_allow_html=True)
-
-
-def render_ux_celebration(title: str, message: str, emojis: list = None):
-    """화려한 축하 효과 표시
-
-    Args:
-        title: 축하 제목
-        message: 축하 메시지
-        emojis: 표시할 이모지 리스트 (기본값: 파티 이모지)
-    """
-    if emojis is None:
-        emojis = ["🎉", "🎊", "✨"]
-
-    emoji_html = "".join([f'<span class="ux-celebration-emoji">{e}</span>' for e in emojis])
-
-    celebration_html = f"""
-    <div class="ux-celebration" id="ux-celebration-box">
-        <div class="ux-celebration-content">
-            {emoji_html}
-            <div class="ux-celebration-title">{title}</div>
-            <div class="ux-celebration-message">{message}</div>
-        </div>
-    </div>
-    """
-    st.markdown(celebration_html, unsafe_allow_html=True)
-
-
-def render_ux_breadcrumb(current_step: int):
-    """현재 위치를 보여주는 브레드크럼 네비게이션
-
-    Args:
-        current_step: 현재 단계 (1-7)
-    """
-    steps = [
-        (1, "정보 입력"),
-        (2, "제목 만들기"),
-        (3, "목차 만들기"),
-        (4, "글 쓰기"),
-        (5, "책 소개서"),
-        (6, "홍보 페이지"),
-        (7, "다운로드"),
-    ]
-
-    items_html = []
-    for i, (num, name) in enumerate(steps):
-        if num < current_step:
-            items_html.append(f'<span class="ux-breadcrumb-item completed">✓ {name}</span>')
-        elif num == current_step:
-            items_html.append(f'<span class="ux-breadcrumb-item active">📍 {name}</span>')
-        else:
-            items_html.append(f'<span class="ux-breadcrumb-item">{num}. {name}</span>')
-
-        if i < len(steps) - 1:
-            items_html.append('<span class="ux-breadcrumb-separator">→</span>')
-
-    breadcrumb_html = f"""
-    <div class="ux-breadcrumb" role="navigation" aria-label="현재 위치">
-        {''.join(items_html)}
-    </div>
-    """
-    st.markdown(breadcrumb_html, unsafe_allow_html=True)
-
-
-def render_ux_step_tip(step: int):
-    """단계별 팁 표시
-
-    Args:
-        step: 현재 단계 (1-7)
-    """
-    tips = {
-        1: """
-        <ul>
-            <li><strong>이름</strong>은 책 표지에 나와요. 본명이나 필명을 써보세요!</li>
-            <li><strong>책 주제</strong>는 한 문장으로 간단히 써도 돼요.</li>
-            <li><strong>누가 읽을까?</strong> - 나이, 직업, 관심사를 생각해보세요.</li>
-            <li><strong>가장 중요한 이야기</strong>는 책의 핵심 메시지예요!</li>
-        </ul>
-        """,
-        2: """
-        <ul>
-            <li>제목은 <strong>10자 이내</strong>로 짧고 강렬하게!</li>
-            <li>숫자가 들어가면 더 눈에 띄어요. (예: "7일 만에", "3가지 비밀")</li>
-            <li>AI가 추천한 제목을 그대로 쓰거나 마음대로 바꿔도 돼요!</li>
-        </ul>
-        """,
-        3: """
-        <ul>
-            <li>목차는 <strong>책의 설계도</strong>예요. 잘 만들면 글쓰기가 쉬워져요!</li>
-            <li>Part 1~5 구조로 40장이 자동 생성돼요.</li>
-            <li>마음에 안 드는 부분은 직접 수정해도 돼요!</li>
-        </ul>
-        """,
-        4: """
-        <ul>
-            <li>한 장씩 천천히 써보세요. <strong>완벽하지 않아도 괜찮아요!</strong></li>
-            <li>'AI로 글 만들기' 버튼 하나로 1,500자가 뚝딱!</li>
-            <li>직접 쓰고 싶으면 아래 '직접 쓰기'를 사용하세요.</li>
-            <li>급하면 '전체 자동 생성'으로 한번에 완성할 수 있어요!</li>
-        </ul>
-        """,
-        5: """
-        <ul>
-            <li>책 소개서는 <strong>출판사에 보여주는 문서</strong>예요.</li>
-            <li>저자 정보를 자세히 쓰면 출판사가 더 관심을 가져요!</li>
-            <li>경력, 성과, SNS 팔로워 수 등을 구체적으로 써보세요.</li>
-        </ul>
-        """,
-        6: """
-        <ul>
-            <li>홍보 페이지는 <strong>책을 알리는 글</strong>이에요.</li>
-            <li>웨비나나 강의 정보를 넣으면 더 효과적이에요!</li>
-            <li>보너스 혜택을 넣으면 사람들이 더 관심을 가져요.</li>
-        </ul>
-        """,
-        7: """
-        <ul>
-            <li>드디어 <strong>책이 완성</strong>됐어요! 🎉</li>
-            <li>마크다운(.md) 또는 텍스트(.txt) 형식으로 다운로드할 수 있어요.</li>
-            <li>다운로드한 파일을 워드나 한글에 붙여넣기해서 편집하세요!</li>
-        </ul>
-        """,
-    }
-
-    tip_content = tips.get(step, "")
-    if tip_content:
-        tip_html = f"""
-        <div class="ux-step-tip">
-            <div class="ux-step-tip-content">
-                {tip_content}
-            </div>
-        </div>
-        """
-        st.markdown(tip_html, unsafe_allow_html=True)
-
-
-def render_ux_char_counter(text: str, min_chars: int = 0, max_chars: int = 0, target_chars: int = 0):
-    """실시간 글자 수 카운터
-
-    Args:
-        text: 현재 텍스트
-        min_chars: 최소 글자 수 (0이면 체크 안함)
-        max_chars: 최대 글자 수 (0이면 체크 안함)
-        target_chars: 목표 글자 수 (0이면 표시 안함)
-    """
-    char_count = len(text.replace(" ", "").replace("\n", "")) if text else 0
-
-    # 상태 결정
-    status_class = ""
-    status_text = ""
-    bar_color = "#1976D2"
-    bar_percent = 0
-
-    if target_chars > 0:
-        bar_percent = min(100, (char_count / target_chars) * 100)
-        if char_count >= target_chars:
-            status_class = "success"
-            status_text = "✓ 목표 달성!"
-            bar_color = "#4CAF50"
-        elif char_count >= target_chars * 0.8:
-            status_class = "warning"
-            status_text = "거의 다 됐어요!"
-            bar_color = "#FF9800"
-        else:
-            status_text = f"목표: {target_chars:,}자"
-
-    if min_chars > 0 and char_count < min_chars:
-        status_class = "danger"
-        status_text = f"⚠️ 최소 {min_chars}자 필요해요!"
-        bar_color = "#f44336"
-
-    if max_chars > 0 and char_count > max_chars:
-        status_class = "danger"
-        status_text = f"⚠️ 최대 {max_chars}자까지!"
-        bar_color = "#f44336"
-
-    counter_html = f"""
-    <div class="ux-char-counter">
-        <span class="ux-char-count {status_class}">📝 {char_count:,}자</span>
-        <div class="ux-char-bar">
-            <div class="ux-char-bar-fill" style="width: {bar_percent}%; background: {bar_color};"></div>
-        </div>
-        <span>{status_text}</span>
-    </div>
-    """
-    st.markdown(counter_html, unsafe_allow_html=True)
-
-
-def render_ux_faq_button():
-    """눈에 띄는 FAQ 버튼"""
-    faq_html = """
-    <div class="ux-faq-floating" onclick="document.querySelector('[data-testid=\\'stSidebar\\']').scrollIntoView();">
-        ❓ 도움이 필요해요?
-    </div>
-    """
-    st.markdown(faq_html, unsafe_allow_html=True)
-
-
-def render_ux_step_locked(required_step: int, required_action: str):
-    """단계 건너뛰기 방지 경고
-
-    Args:
-        required_step: 필요한 이전 단계 번호
-        required_action: 필요한 행동 설명
-    """
-    locked_html = f"""
-    <div class="ux-step-locked">
-        <div class="ux-step-locked-icon">🔒</div>
-        <div class="ux-step-locked-text">앗! 아직 이 단계로 올 수 없어요!</div>
-        <div class="ux-step-locked-hint">먼저 {required_step}단계에서 {required_action}을(를) 완료해주세요.</div>
-    </div>
-    """
-    st.markdown(locked_html, unsafe_allow_html=True)
-
-
-def render_ux_nav_buttons(current_step: int, can_go_next: bool = True, next_label: str = None, prev_label: str = None):
-    """향상된 이전/다음 네비게이션 버튼
-
-    Args:
-        current_step: 현재 단계
-        can_go_next: 다음으로 이동 가능 여부
-        next_label: 다음 버튼 레이블 (기본값: 자동 생성)
-        prev_label: 이전 버튼 레이블 (기본값: 자동 생성)
-    """
-    step_names = {
-        1: "정보 입력",
-        2: "제목 만들기",
-        3: "목차 만들기",
-        4: "글 쓰기",
-        5: "책 소개서",
-        6: "홍보 페이지",
-        7: "다운로드",
-    }
-
-    prev_name = step_names.get(current_step - 1, "")
-    next_name = step_names.get(current_step + 1, "")
-
-    if prev_label is None:
-        prev_label = f"← {current_step - 1}. {prev_name}" if prev_name else "← 이전"
-    if next_label is None:
-        next_label = f"{current_step + 1}. {next_name} →" if next_name else "다음 →"
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        if current_step > 1:
-            if st.button(prev_label, key=f"ux_nav_prev_{current_step}", use_container_width=True):
-                st.session_state.current_step = current_step - 1
-                st.rerun()
-
-    with col2:
-        if current_step < 7:
-            if can_go_next:
-                if st.button(next_label, key=f"ux_nav_next_{current_step}", use_container_width=True, type="primary"):
-                    st.session_state.current_step = current_step + 1
-                    st.rerun()
-            else:
-                st.button(next_label, key=f"ux_nav_next_{current_step}_disabled", use_container_width=True, disabled=True)
-                st.caption("👆 위의 필수 항목을 완료해주세요!")
-
-
-def inject_auto_scroll_script(element_id: str = "ux-scroll-target"):
-    """새 콘텐츠 생성 시 자동 스크롤 스크립트 삽입
-
-    Args:
-        element_id: 스크롤 대상 요소 ID
-    """
-    script = f"""
-    <script>
-        setTimeout(function() {{
-            var target = document.getElementById('{element_id}');
-            if (target) {{
-                target.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
-                target.classList.add('ux-scroll-target');
-            }}
-        }}, 500);
-    </script>
-    """
-    st.markdown(script, unsafe_allow_html=True)
-
-
 def render_help_and_contact_sections():
-    """도움 챗봇과 연락 섹션 - 모달 팝업 형태로 렌더링"""
+    """도움 챗봇과 연락 섹션 렌더링"""
     current_step = st.session_state.current_step
     book_info = st.session_state.book_info
     student_name = book_info.get("name", "")
 
-    # 도움 챗봇 모달 (활성화된 경우)
+    # 도움 챗봇 섹션 (활성화된 경우)
     if st.session_state.get("show_help_chatbot", False):
-        # 모달 오버레이 시작
-        st.markdown("""
-        <div class="modal-overlay" id="help-modal-overlay">
-            <div class="modal-container">
-                <div class="modal-header">
-                    <h3>AI 도움 챗봇</h3>
-                </div>
-                <div class="modal-body">
-        """, unsafe_allow_html=True)
-
-        # 닫기 버튼 (Streamlit 버튼)
-        col_close1, col_spacer1, col_title1 = st.columns([1, 6, 1])
-        with col_close1:
-            if st.button("X 닫기", key="close_help_modal", type="secondary"):
-                st.session_state.show_help_chatbot = False
-                st.rerun()
-
-        # 도움 챗봇 내용
+        st.markdown("---")
+        st.markdown('<div class="help-chatbot-section">', unsafe_allow_html=True)
         render_enhanced_chatbot(current_step, book_info)
+        st.markdown('</div>', unsafe_allow_html=True)
 
-        st.markdown("""
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    # 연락하기 모달 (활성화된 경우)
+    # 연락하기 섹션 (활성화된 경우)
     if st.session_state.get("show_contact_section", False):
-        # 모달 오버레이 시작
-        st.markdown("""
-        <div class="modal-overlay" id="contact-modal-overlay">
-            <div class="modal-container">
-                <div class="modal-header">
-                    <h3>선생님께 연락하기</h3>
-                </div>
-                <div class="modal-body">
-        """, unsafe_allow_html=True)
-
-        # 닫기 버튼 (Streamlit 버튼)
-        col_close2, col_spacer2, col_title2 = st.columns([1, 6, 1])
-        with col_close2:
-            if st.button("X 닫기", key="close_contact_modal", type="secondary"):
-                st.session_state.show_contact_section = False
-                st.rerun()
-
-        # 연락하기 내용
+        st.markdown("---")
+        st.markdown('<div class="contact-section">', unsafe_allow_html=True)
         render_contact_section(student_name, current_step, book_info)
-
-        st.markdown("""
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
 
 def main():
