@@ -2325,9 +2325,11 @@ st.markdown(f"""
         color: #667eea;
         font-weight: 600;
     }}
-""" + ACHIEVEMENT_CSS + """
 </style>
 """, unsafe_allow_html=True)
+
+# Achievement CSS (별도 로드 - f-string 충돌 방지)
+st.markdown("<style>" + ACHIEVEMENT_CSS + "</style>", unsafe_allow_html=True)
 
 
 def init_session_state():
